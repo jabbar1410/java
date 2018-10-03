@@ -1,0 +1,118 @@
+String类前言：
+	String位于java.lang包下
+	API当中说：Java程序员中的所有字符串字面值（如"abc"）都作为类的实例实现
+	其实就是说：程序当中所有的双引号字符串，都是String类的对象。（就算没有new,也照样是。）
+	所有的类都需要导包才能使用，除了两种情况：
+		1.要使用的目标类，和当前类位于同一个包下
+		2.要使用的目标类，位于java.lang包下，但是不包含子包
+
+根据println方法逻辑得：（只打印字符串）
+	1.如果是字符串类型，那么直接显示内容
+	2.如果不是字符串类型，那么就想办法转换为字符串，然后再显示
+	一般的对象都是使用“类型信息+@+地址值”作为字符串内容的
+
+String字符串的特点：
+	1.字符串的内容永不可变。【重点】
+	//每当你觉得好像是应该变了，必然是创建了一个新的字符串。  //改变的是地址指向
+	2.正是因为字符串不可改变，所以字符串是可以共享使用。
+	3.字符串效果上相当于char[]字符数组，其低层原理是byte[]字节数组
+
+创建字符串String的4+1种方式：
+	四种构造方法：
+		1.public String():创建一个空白字符串，不含有任何内容
+			String str = new String();
+			sout(str);  //输出空白
+		2.public String(char[] array):根据字符数组来创建字符串
+			char[] c = {'A','B','C'};
+			String str = new String(c);
+			sout(str);  //输出ABC
+		3.public String(char[] array, int offset, int count):根据字符串数组的一部分来创建字符串		//参数offset代表一个数字当中的起始索引，从0开始。参数count代表取用几个字符
+		4.public String(byte[] array):根据字节数组来创建字符串
+			byte[] b = {97,98,99};
+			String str = new String(b);
+			sout(str);  //输出abc
+	一种直接创建：
+		String str = "Hello";  //右边直接用双引号
+	注意：
+		直接赋值双引号，也是一个字符串对象  //就是可以利用"Hello".的方式调用String方法
+
+
+字符串池，是为了节省内存，重复利用相同的字符串
+	1.凡是双引号直接写上的字符串，默认就在池中
+	2.凡是new出来的字符串，默认不在池中
+	
+
+String字符串内容的比较方法：	//对于基本数据类型来说，==是进行数值的比较；对于引用类型来说，==是进行地址值的比较
+	a） public boolean equals(Object obj):严格区分大小写，参数0bj为另一个对象（跟谁比）,Object也是一种类型，可以接受任意类型的数据
+	用法：str1.equals(str2); 
+	b） public boolean equalsIgnoreCase(String str):忽略大小写
+	注意事项：
+		1.equals方法具有对称性，也就是a.equals(b)和b.equals(a)效果一样
+		2.如果equals方法需要比较的两个字符串当中，有一个是常量，那么尽量将常量写在前面
+			推荐："abc".equals(str)		不推荐：str.equals("abc")
+		因为调用方法的时候，对象名当中如果存储的是null值，那么将会发生“空指针异常”，NullPointerException
+			例如：String str = null;   sout(str.equals("abc"));
+
+String当中与获取相关的常用方法：
+	1.public int length():获取字符串当中含有的字符个数，拿到字符串长度。
+	2.public String concat(String str):将当前字符串和参数字符串拼接，返回值新的字符串
+	3.public char charAt(int index):获取指定索引位置的单个字符。（索引从0开始。）
+	4.public int indexOf(String str):查看参数字符串在本字符串当中首次出现的索引位置，如果没有返回-1值
+	5.public char[] toCharArray():将当前字符串拆分成为字符数组作为返回值。
+	6.public byte[] getBytes():获得当前字符串低层的字节数组
+	7.public String replace(CharSequence oldString, CharSequence newString):将所有出现的老字符串替换成为新的字符串，返回替换之后的结果新字符串。	//CharSequence为String的接口
+
+字符串的截取方法：
+	1.public String substring(int index): 截取从参数位置一直到字符串末尾，返回新字符串
+	2.public String substring(int begin, int end): 截取从begin开始，一直到end结束，中间的字符串	//备注：[begin,end),包含左边，不包含右边。
+	
+	
+字符串的切割方法：
+	public String[] split(String regex)：按照参数的规则，将字符串切分成为若干部分  //参数为“正则表达式”
+	注意：不要使用英文句点作为切分的标识，如果非要用英文句点，应该写“\\.”
+
+static关键字：
+	一旦用了static关键字，那么这样的内容不再属于对象自己，而是属于类的，所以凡是本类的对象，都共享同一份。
+	1.如果一个成员变量使用了static关键字，那么这个变量不再属于对象自己，而是 属于所在的类。多个对象共享同一份数据。
+	2.如果一个成员符方法，那么这就成为了静态方法。静态方法不属于对象，而是属于类的。
+
+如何使用static修饰的变量和方法：
+	1.静态变量： 类名称.静态变量名
+	2.静态方法： 类名称.静态方法名（）
+	// 静态变量和方法也可以用对象名调用，但不推荐用，因为这种写法在编译之后会被javac翻译成为“类名称.静态方法名”
+	注意事项：
+		1.静态不能直接访问非静态
+			//因为在内存当中是【先】有静态内容，【后】有非静态内容。“先人不知道后人，但是后人知道先人”
+		2.静态方法当中不能用this。
+			//因为this代表当前对象，通过谁调用的方法，谁就是当前对象。而静态方法是通过类调用的。
+
+静态代码块：
+	格式：
+		public class 类名称{
+			static{
+				//静态代码块内容
+			}
+		}
+	特点：当第一次用到本类时，静态代码块执行唯一的一次
+		//静态内容总是优先于非静态，所以静态代码块比构造方法先执行
+	用途：用来一次性地对静态成员变量进行赋值
+
+数组工具类Arrays:
+	作用：是一个与数组相关的工具类，里面提供了大量静态方法，用来实现数组常见的操作
+	静态方法：
+		1.public static String toString(数组): 将参数数组变成字符串
+			//（按照默认格式：[元素1,元素2,元素3...]）
+		2.public static void sort(数组): 按照默认升序（从小到大）对数组的元素进行排序。
+			//1.如果是数值，sort默认按照升序从小到大
+			  2.如果是字符串，sort默认按照字母升序
+			  3.如果是自定义的类型，那么这个自定义的类需要有Comparable或者Comparator接口的支持。
+
+数学相关工具类Math：
+	作用：提供了大量的静态方法，完成与数学运算相关的操作
+	静态方法：
+		1.public static double abs(double num): 获取绝对值   
+		2.public static double ceil(double num): 向上取整    //2.1-->3 、 -2.9-->-2
+		3.public static double floor(double num): 向下取整   //2.9-->2 、 -2.1-->-3
+		4.public static long round(double num): 四舍五入
+	静态变量：
+		Math.PI  代表近似的圆周常量

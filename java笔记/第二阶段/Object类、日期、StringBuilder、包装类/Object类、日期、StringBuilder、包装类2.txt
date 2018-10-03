@@ -1,0 +1,170 @@
+Object类：
+	位置：java.lang.Object
+	概述：它是所有类的父类，所有的类直接或间接继承Object，如果一个类没有特别指定父类，那么它默认继承Object类，它们都能调用Object中的方法
+
+	构造方法：  Object();
+	
+	常用方法：
+		1.public String toString(): 返回该对象字符串表示形式（没有重写，打印内存地址信息） //默认地址格式： 类的全路径+@+十六进制的哈希地址值
+
+		2.public boolean equals(Object obj): 指示其他某个对象是否与此对象“相等”（没有重写，判断是否是同一个对象）   //idea中的快捷键 alt + intsert 选equals（）和 hascode（）
+
+		特殊：对象名.getClass(): 获取调用对象的类类型
+		      Objects工具类有一个静态方法：Objects.equals(Object A,Object B) //可对引用类型进行比较，并会对象进行判空；
+
+
+
+
+
+时间原点(格林尼治)： 公元1970年1月1日，午夜00:00:00  此时得到毫秒值为0
+		//因为我们属于东八区，所以我们获取到的时间为08:00:00
+
+获取当前系统日期的毫秒值： System.currentTimeMillis()  返回值为long类型参数
+
+【注意事项】：时间和日期的计算，必须依靠毫秒值计算
+
+
+
+时间和日期类Date： 
+	位置：java.util.Date
+	构造方法：
+		空参构造：Date()
+		Date date = new Date();  //Date重写过toStrirng方法，打印对象显示当前系统时间和日期(以毫秒为单位)
+		有参构造：Date(long s)
+		Date date = new Date(1000);  //传递毫秒值，打印时间原点+毫秒值对应的日期，参数为偏移量
+	方法：
+		【日期转换为毫秒值】：
+		long getTime()   //返回的是毫秒值，将Date表示的日期，转换为毫秒值
+		【毫秒值转换为日期】:
+		void setTime(long time)   //将日期对象，设置到指定毫秒值上
+
+
+日期格式化DateFormat:  
+(此类为抽象类无法直接创建对象，因此可以使用其子类SimpleDateFormat调用其方法)
+	位置：java.text.SimpleDateFormat
+	实现日期格式化步骤：【Date转换为String】
+		1.创建SimpleDateFormat对象，在类构造方法中，写入字符串的日期格式（格式自定义）
+		2.调用SimpleDateFormat的方法format对日期进行格式化
+			String format(Date date) 传递日期对象，返回格式化后的字符串(根据自己定义的格式)	//调用的是父类DateFormat中的format方法
+	日期格式：（可用API在SimpleDateFormat类中查看）
+		y   年份
+		M   月份
+		d   月中的天数
+		H   0-23小时
+		m   小时中的分钟
+		s   秒
+	示例：
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH点mm分钟ss秒");
+			//定义格式时，表示时间日期的字母，不能作为时间的分隔
+		String date = sdf.format(new Date());
+		System.out.println(date);  //输出2018年06月22日 19点53分48秒
+
+	将字符串解析为日期对象步骤：【String转换为Date】
+		1.创建SimpleDateFormat的对象，在构造方法中，指定日期格式
+			SimpleDateFormat(String pattern)
+		2.子类对象，调用方法parse,传递String,返回Date
+			Date parse(String source)  //传入的时间格式必须和SimpleDateFormat构造方法定义的格式完全相同
+	示例：
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat(String pattern)
+		Date date = sdf.parse("1995-5-6")    //因为输入日期格式可能存在风险，如输入dsf-11-11,因此在方法中因抛出异常，在方法名括号后面写入throws Exception
+		System.out.println(date);  //输出Sat May 06 00:00:00 CST 1995
+
+
+
+日历类Calendar:
+(此类为抽象类，如需创建对象应该使用它的子类对象)
+	位置；java.util.Calendar
+	【静态方法】：
+		1.Calendar getInstance() 使用默认时区和语言环境获得一个日历,【返回值为子类的对象】，可以用本类对象接收
+	注意事项：外国的月份是0-11，所以想要得到本地的月份字段需要+1
+	
+	非静态方法：
+		1.int get(int field) //参数field为Calendar类中的字段（可通过API查看）,返回值为相应字段中的数值
+	用法示例：
+		Calendar cld = Calendar.getInstance(); //【获取子类对象用Calendar接收】
+		int = cld.get(Calendar.YEAR);  //用子类对象调用get方法
+==============================================================================================
+		2.void set(int field,int value)  //field 设置的是哪个日历字段，value 设置后的具体数值
+		  void set(int year,int month,int day) //传递年、月、日一起修改
+==============================================================================================
+		3.void add(int field, int amount)  //日历的偏移，将指定字段值向前或向后偏移，只需修改amount值的正负即可
+==============================================================================================
+		4.Date getTime() //将日历类转换为Date类型
+
+
+
+System类：
+	位置：java.lang.System
+	静态方法：
+		1.public static long currentTimeMillis(): 返回以毫秒值为单位的当前时间
+		2.public static void arraycopy(Object src,int srcPos,Object dest,int length):将数组中指定的数据拷贝到另一个数组中
+		// src:源数组  srcPos:源数组索引起始位置  dest:目标数组   destPos:目标是数组索引起始位置   length:复制元素的个数    （将目标数组中的元素进行覆盖）
+
+
+
+
+
+StringBuffer类：
+	特点：字符串缓冲区支持【可变的字符串】，字符串的缓冲区对象，可提高字符串的操作效率，内部采用了，可变数组方式实现，类内部类定义了数组，这个数组没有final（String中定义了数组是final的，所以String不可改变），它的内部拥有一个数组用来存放字符串内容，进行字符串拼接时，直接在数组中加入新内容。StringBuilder会自动 维护数组的扩容(【默认16字符空间，超过自动扩充】)
+
+	构造方法：
+		StringBuffer() 构造一个其中不带字符的字符串缓冲区，其初始容量为 16 个字符。
+	方法：
+		1.StringBuffer append(参数可以任意类型) //将任意类型的数据，添加到缓冲区，参数查看API 
+			//方法返回值为本类对象(谁调用返回就是谁)，因此可以进行如下调用：
+			StringBuffer buffer = new StringBuffer();
+			buffer.append(...).append(...).append(...)  //链式编程
+		2.StringBuffer delete(int start, int end) //移除此序列的子字符串中的字符索引左闭右开[start,end）
+		3.StringBuffer insert(int index,任意类型) //将任意类型数据，插入到缓冲区的指定索引上
+		4.StringBuffer replace(int start, int end, String str)  //将指定的索引范围内的所有字符，替换成新的字符串
+		5.StringBuffer reverse()  //将缓冲区中的字符反转
+		重要：6.String toString()   //继承Object，重写toString(),将缓冲区中的所有字符，变成字符串String
+
+
+
+StringBuilder类：
+	特点：它的方法与StringBuffer完全一样，用法也一样。
+	与StringBuffer类的区别：
+		StringBuilder线程不安全，运行速度比较快。StringBuffer线程安全，运行速度相对较慢。因此在一般情况下使用的话建议用StringBuilder类
+
+
+
+
+包装类：
+	基本类型		对应包装类
+	byte			Byte
+	short			Short
+	int			Integer
+	long			Long
+	float			Float
+	double			Double
+	char			Character
+	boolean			Boolean
+
+	基本类型 --> 包装类型（装箱）：
+		Integer i = Integer.valueOf(3);
+	包装类型 --> 基本类型（拆箱）：
+		int i = i.intValue();
+
+	自动装箱拆箱：（从jdk1.5开始，装箱拆箱虚拟机自动完成）
+		Integer i = 4；//自动装箱
+		int num = i + 3; //自动拆箱
+
+ 	【基本类型与字符串之间的转换】：
+		1.基本类型直接与""相连接即可；如：34+""   （基本类型 --> 字符串）
+		2.String转换成对应的基本类型
+			//除了Character类之外，其他所有包装类都具有parseXxx静态方法可以将字符串参数转换为对应的基本类型： 
+			public static byte parseByte(String s) ：将字符串参数转换为对应的byte基本类型。 
+			public static short parseShort(String s) ：将字符串参数转换为对应的short基本类型。 
+			public static int parseInt(String s) ：将字符串参数转换为对应的int基本类型。
+			public static long parseLong(String s) ：将字符串参数转换为对应的long基本类型。 
+			public static float parseFloat(String s) ：将字符串参数转换为对应的float基本类型。 
+			public static double parseDouble(String s) ：将字符串参数转换为对应的double基本类型。 
+			public static boolean parseBoolean(String s) ：将字符串参数转换为对应的boolean基本类型。
+			
+			String转换成char
+				charAt(0);
+			
+
+		用法:int num = Integer.parseInt("100")

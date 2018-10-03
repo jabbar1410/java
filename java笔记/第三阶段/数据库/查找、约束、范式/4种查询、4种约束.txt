@@ -1,0 +1,297 @@
+ 【语法】：
+		select
+			字段列表
+		from
+			表名列表
+		where
+			条件列表
+		group by
+			分组字段
+		having
+			分组之后的条件
+		order by
+			排序
+		limit
+			分页限定
+
+
+
+
+
+排序查询【关键字：order by】：
+		
+	排序方式：
+		1.ASC：升序，默认的，不写排序方式默认为升序
+		2.DESC: 降序
+	
+	示例：	
+		select * from order by 字段1 排序方式1，字段2 排序方式2...; 
+	
+	注意：如果有多个排序条件，则当前面的条件一样是，才会判断第二个条件。
+
+
+
+
+
+聚合函数（将一列数据作为一个整体，进行纵向的计算）：
+	1.count（列名）：计算信息条数
+		select count(主键列) from 表名；
+		以下方式性能略高：
+		select count（*） from 表名； //计算所有列
+		select count (1)  from 表名； //先创建一列，给每一列添加1，然后进行计算
+	2.max（表名）：计算最大值
+		select max（列名）from 表名；
+	3.min（表名）：计算最小值
+		select min (列名) from 表名；
+	4.sum：计算和
+
+	5.avg：计算平均值
+
+	【注意】：
+		1.聚合函数计算时，会排除null值
+		2.聚合函数后面必须紧跟括号，否则会报错
+	【解决方案】：
+		1.选择不包含空的列进行计算
+		2.通过IFNULL函数将列中null修改为数值
+
+
+
+
+
+分组查询【关键字：group by】：
+	示例：
+		select 列名1,avg(列名2) from group by 列名1；
+		select 列名1,avg(列名2) from where 条件 group by 列名1 having avg(列名2) 条件；
+		提示：可以取别名，利用别名进行判断
+	【注意】: 
+		1.分组查询的字段只能为：分组字段、聚合函数，写其他字段没有意义
+
+	where和having的区别：
+		1.where在分组之前进行限定，如果不满足条件，则不参与分组。having在分组之后进行限定，如果不满足条件，则不会被查询出来
+		2.where后不可以跟聚合函数，having可以进行聚合函数的判断
+
+
+
+
+
+分页查询【关键字：limit】：
+
+	用法：
+		limit（开始的索引，每页查询的条数） //索引从0开始
+	
+	示例：
+		select * from 表名 limit 0,3; -- 查询第一页3条数据
+		select * from 表名 limit 3,3；-- 查询第二页3条数据
+
+	开始索引公式：
+		开始索引 = （当前的页码 - 1）* 每页显示的条数；
+
+	提示：limit语句是MySQL的特有写法，是一种‘方言’
+
+
+
+
+
+
+
+
+约束：
+	概念： 对表中的数据进行限定，保证数据的正确性、有效性和完整性
+
+	分类：
+		1.主键约束： primary key
+
+		2.非空约束： not null
+
+ 		3.唯一约束： unique
+
+		4.外键约束： foreign key
+	
+		5.默认约束：default
+		
+		6.检查约束：check   //MySQL不支持，Oracal支持
+
+
+非空约束（not null）：  //表示此列不能为空
+	1.创建表的时候添加约束	
+		create table 表名(
+			id int,
+			name varchar(10) not null
+		);
+	2.表创建完，添加约束
+		alter table 表名 modify 列名 varchar(10) not null;
+	3.删除约束
+		alter table 表名 modify 列名 varchar (10);
+	
+	【注意】：若当前列已经有null值存在，不能将其修改为非空约束
+
+
+
+唯一约束（unique）：   //表示此列不能有重复的内容
+	1.创建表时创建约束
+		create table 表名(
+			id int,
+			name varchar(20) unique
+		);
+	2.表创建完，修改参数
+		alter table 表名 modify 列名 varchar(20) unique;
+	3.删除约束
+		alter table 表名 drop index 列名;    //注意！！列名后面不能写数据类型
+
+	【注意】：
+		1.唯一约束可以有null值，且可以有多个（通过insert语句可以添加多个null，通过图形化工具不行）
+		2.若当前列已经有重复值存在，不能将其修改为唯一约束
+
+
+
+主键约束（primary key）：   //表示此列不能为空，且不能有重复值
+	
+	概念：
+		--代理主键 （没有业务意义的列，推荐使用）
+		--业务主键
+
+	1.在创建表时，添加主键约束
+		create table 表名(
+			id int primary key,
+			name varchar(20)
+		);
+	2.表创建完，添加主键约束
+		alter table 表名 modify 列名 int primary key;
+	3.删除约束
+		alter table 表名 drop primary key;
+
+	【注意】：
+		① 一张表只能有一个字段为主键
+		② 主键就是表中记录的唯一标识
+		③ 若当前列有重复或null值，不能将其修改为主键约束
+
+	4.自定增长(auto_increment)
+		前提：如果主键列是【数值类型】的，使用auto_increment配合主键完成自动增长
+		（1）创建表时添加主键约束，并实现主键自增长
+			create table 表名 (
+				id int primary key auto_increment,
+				name varchar(20)
+			);
+		（2）表创键完，实现主键自增长
+			alter table 表名 modify 列名 int auto_increment;  //此列必须是主键列
+		（3）删除自动增长
+			alter table 表名 modify 列名 int；  //主键约束依然存在
+
+		【提示】：
+			1.自动增长每次都从表的上一条数据值开始自增
+			2.当要删除带自增的主键时，需要先解除自增
+
+
+
+外键约束（foreign key）：  //让表与表之间产生关系，从而保证数据的正确性
+
+	概念：
+		主表：没有外键的表
+		从表：有外键的表
+
+
+	1.创建表时，添加外键约束
+		create table 表名(
+			...
+			外键列，   //【有逗号】
+			constraint 外键名 foreign key (外键列名) references 主表名（主表关联的主键列列名）
+		);
+	2.表创建完，添加外键
+		alter table 表名 add constraint 外键名 foreign key (外键列名) references 主表名（主表关联的主键列列名）；
+	3.删除外键约束
+		alter table 表名 drop fordign key 外键名；
+						//【不是外键列名】
+		
+	【提示】: 
+		1.外键无法看到，但能把两张表关联起来
+		2.外键列数据，在主表关联列中不存在，无法进行主键约束
+	【注意】：
+		被关联的主表列，必须保证是唯一约束或主键约束！！！！！！！！
+
+	4.级联操作
+		分类：
+			①级联更新（on update cascade）：  //通过主表修改从表所有关联值
+			②级联删除（on delete cascade）：  //通过主表删除从表所有关联值
+		示例：
+			alter table 表名 add constraint 外键名 foreign key (外键列名) references 主表名（主表主键列列名）on update cascade;
+
+		【提示】: 
+			1.使用级联操作前，需要先删除外键约束
+			2.级联更新和级联删除可以单独使用，也可同时使用
+
+
+
+
+
+
+
+【聚合函数补充】：
+	1.concat拼接
+		select concat（'hello'，‘mysql’，‘abc’）str from dual ;  //dual为伪表
+
+	2.substr截取自串
+		select substr（‘hello，mysql’，2）；
+		select substr（‘abcddfg’，3,4）；
+
+	3.upper转换成大写
+		select upper（‘ABCDsfsf’）；
+
+	4.lower转换成小写
+	
+
+	5.trin去前后指定的空格和字符
+		-- 默认去除空格
+	
+		-- 去除指定字符
+			select trin（‘a’from‘asdfasd’）;
+
+	6.replace替换
+		select replace（‘this is a book’，‘is’，‘at’）；
+
+	7.length 获取字节个数
+
+
+
+
+
+
+
+【约束补充】：
+	默认约束（default）：  //给指定列添加默认值属性
+		
+		1.创建
+			create table 表名(
+				id int,
+				name varchar(20),
+				address varchar(20) default '广州'
+			);
+
+		2.使用默认值
+			insert into 表名 values(1,'李四',default);
+				//当不想用默认值时，可以使用自定义值代替
+			insert into 表名 （id,name）values (1,'张三');
+				//此时不给address赋值，也会赋默认值
+			
+
+
+	联合主键定义： //使用联合主键后，所有组合键不能重复
+		主键数在一个表中，只能有一个。不能出现多个主键。主键可以是单列，也可以是多列。
+		create table 表名(
+			id int,
+			name varchar(20),
+			address varchar(20),
+			primary key (id,name)
+		);
+		
+	
+	当字符串类型作为主键列时，添加数据时可以通过UUID（）方法，给字符串自动赋值，这样可以保证字符串唯一不重复：
+		insert into 表名 values （UUID(),13,'hangzhou'）;
+
+
+	外键约束、主键约束和唯一约束会自动生成索引值（表的一种属性），删除他们修饰的列，可用drop index 删除：
+		1.查看表中含有索引的列：
+			show index from 表名；
+		2.删除约束
+			alter table 表名 drop index 列名；
+	
+		

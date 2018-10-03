@@ -1,0 +1,66 @@
+1.只要是字符串，必然就是对象
+	所有的类都需要导包才能使用，除了两种情况：
+	1.要使用的目标类，和当前类位于同一个包下
+	2.要使用的目标类，位于java.lang包下，但是不包含子包
+	为什么打印字符串对象不是地址值：
+根据println方法逻辑得：（只打印字符串）
+	1.如果是字符串类型，那么直接显示内容
+	2.如果不是字符串类型，那么就想办法转换为字符串，然后再显示
+	一般的对象都是使用“类型信息+@+地址值”作为字符串内容的
+
+2.API文档的基本使用
+
+3.如何创建字符串：
+	a）直接赋值双引号，也是一个字符串对象
+	b）可以通过new关键字来调用String的构造方法
+		i public String(char[] array):根据字符数组来创建字符串
+		ii public String(char[] array, int offset, int count):根据字符串数组的一部分来创建字符串
+			//参数offset代表一个数字当中的起始索引，从0开始。参数count代表取用几个字符
+
+4.字符串池，是为了节省内存，重复利用相同的字符串
+	a）凡是双引号直接写上的字符串，默认就在池中
+	b）凡是new出来的字符串，默认不在池中
+	//演示请看示例Demo01StringPool
+	
+5.字符串的内容永不可变。每当你觉得好像是应该变了，必然是创建了一个新的字符串
+	//改变的地址指向
+
+6.字符串内容的比较方法：
+	小技巧：
+	如果equals方法需要比较的两个字符串当中，有一个是常量，那么尽量将常量写在前面
+	因为调用方法的时候，对象名当中如果存储的是null值，那么将会发生“空指针异常”，NullPointerException
+	a） public boolean equals(Object obj):严格区分大小写，参数0bj为另一个对象（跟谁比）,Object也是一种类型，可以接受任意类型的数据
+	用法：str1.equals(str2);  示例见Demo02StringEquals
+	b） public boolean equalslgnoreCase(String str):忽略大小写
+	
+7.字符串的替换方法：
+	public String replace(CharSequence oldStr,CharSequence newStr)  //返回值为String
+	//将字符串当中出现的所有oldstr部分，替换为指定的newstr 
+	CharSequence为String的接口
+	
+8.字符串的切割方法：
+	public String[] split(String regex)   //返回值为字符串数组
+	注意：不要使用英文句点作为切分的标识，如果非要用英文句点，应该写“\\.”
+	
+9.集合：本身也是一种引用类型，和数组类似，但是主要区别就是集合的长度可变，数组的长度不可变
+
+10.如何创建一个ArrayList集合？//<E> E为泛型，指存放什么类型的数据
+	a）导包：import.java.util.ArrayList
+	b）创建：ArrayList<泛型> List = new ArrayList<>();
+	c）注意：泛型只能使用引用类型，不能使用基本类型。
+	d）泛型只能使用引用类型，不能使用基本类型
+	e）集合直接打印对象名，得到的不是地址值，而是内容
+	因为ArrayList这个类中的toSting方法
+	
+11.如何使用ArrayList集合，常用方法：
+	a）添加元素：public boolean add(E element)	//返回值类型为boolean
+	//向ArrayList集合当中添加一个元素，参数是被添加的元素，而返回值一定是true值代表添加成功
+	b）获取元素：public E get(int index)	//返回类型为泛型
+	c）获取长度：public int size()	//返回值类型为Int
+	
+12.如何让集合存储基本类型：使用包装类。
+	int对应Integer
+	char对应Character
+	其他基本类型首字母大写即可
+	
+13.集合能否存储自定义的类型，例如：Person？ 可以

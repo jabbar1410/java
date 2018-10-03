@@ -1,0 +1,139 @@
+缓冲流：
+	概述：是对4个基本FileXxx流的增强，所以也是4个流
+
+
+	按照数据类型分类：
+		
+		字节缓冲流：BufferedInputStream, BufferedOutputStream
+		字符缓冲流：BufferedReader, BufferedWriter
+	
+	【基本原理】：在创建流对象时，会创建 一个内置的默认大小的缓冲区数组，通过缓冲区读写，减少系统IO次数，从而提高读写的效率。
+	****缓冲流：对基本流的功能进行增强（装设者设计模式）
+	BufferedInputStream(InputStream)
+	BufferedOutputStream(OutputStream)
+		以上两个高效流的使用：非常消耗内存的，内部有数组的拷贝动作，是消耗一部分效率的
+		实际选择时，如果我们能够明确我们操作的文件是一个大文件，使用基本流，把基本流的byte数组容量放大 32*1024
+		如果我们没有办法确定我们操作的文件大小，此时选择使用高效流
+	【注意】：用缓冲流写数据时，可以通过构造方法BufferedOutputStream(OutputStream os, int sum) //sum为缓冲数组大小，默认为8*1024，由源码得知，如果向文件写内容时，所写的内容小于缓冲数组小，数据不会被写入，需要进行flush或close操作才能写入。但当数据内容大于缓冲数组大时，不需要flush和close数据也能被写入
+
+
+
+字节缓冲流：
+
+	构造方法：
+		1.public BufferedInputStream(InputStream in): 创建一个新的缓冲输入流
+		2.public BufferedOutputStream(OutputStream out): 创建一个新的缓冲输出流
+
+
+
+字符缓冲流：
+	
+	构造方法：
+		1.public BufferedReader(Reader in): 创建一个新的缓冲输入流
+		2.public BufferedWriter(Writer out): 创建一个新的缓冲输出流
+	
+	特有方法：
+		1.BufferedReader: public String readLine(): 读一行文字，【如果没有读取项，返回null】
+		2.BufferedWriter: public void newLine(): 写一行行分隔符，有系统属性定义符号
+
+
+
+
+
+
+转换流：【注意】：在windos系统中，会对不同编码文件自动切换解码，在IDEA中，只使用utf-8默认解码
+	
+	编码：按照某种规则，将字符存储到计算机中
+	解码：将存储在计算机中的二进制数按照某种规则解析显示出来
+	
+	【字符编码和字符集】：详见讲义！！！！
+
+
+InputSteamReader类：
+	
+	概念：是Readerd的子类，是从字节流到字符流的桥梁。它读取字节，并使用指定的字符集将其解码为字符。它的字符集可以由名称指定，也可以接受平台的默认字符集
+	
+	构造方法：
+		1.InputStreamReader(InputStream in): 创建一个使用默认字符集的字符流
+		//等同于：FileReader（）
+		2.InputStreamReader(InputStream in, String charsetName): 创建一个指定字符集的字符流（传递编码规则）
+
+
+OutputStreamWriter类：
+	
+	概念：是Writer的子类，是从字符流到字节流的桥梁。使用指定的字符集将字符编码为字节。它的字符集可以由名称指定，也可以接受平台的默认字符集。
+	
+	构造方法：
+		1.OutputStreamWriter(OutputStream in):创建一个使用默认字符集的字符流
+		//等同于：FileWriter()
+		2.OutputStreamWriter(OutputStream in, String charsetName): 创建一个指定字符集的字符流（传递编码规则）
+
+转换流（字节流转换成字符流）：
+
+```java
+InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(new File("C:/a.txt")));
+```
+
+
+
+
+
+序列化：
+
+	概念：
+		序列化：将对象按照字节形式写到流中  对象---》字节序列
+			//将对象以文件的形式存储（持久存储接口）
+		
+		反序列化：就是将流中的字节序列按照操作重构对象   字节序列--->对象
+
+
+ObjectOutputStream类：
+	
+	概念：将java对象的原始数据类型写出到文件，实现对象的持久存储（序列化）
+	
+	构造方法：public ObjectOutputStream(OutputStream out): 创建一个指定OutputStream的ObjectOutputStream.
+	
+	序列化操作：
+		1.必须满足的两个条件
+			（1）该类必须实现 java.io.Serializable 接口， Serializable 是一个标记接口，不实现此接口的类将不会使任 何状态序列化或反序列化，会抛出 NotSerializableException 。
+			（2）该类的所有属性必须是可序列化的。如果有一个属性不需要可序列化的，则该属性必须注明是瞬态的，使用【 transient 】关键字修饰。
+	
+		2.【写出对象序列化方法】
+			public final void writeObject(Object obj): 将指定的对象写出
+
+	【提示】：什么叫可序列化：就是实现Serializable接口的叫可序列化
+
+ObjectInputStream类：
+	
+	概念：将之前使用ObjectOutputStream序列化的原始数据恢复为对象（反序列化）
+	
+	构造方法：public ObjectInputStream(InputStream in): 创建一个指定InputStream的ObjectInputStream
+	
+	反序列化操作1：
+		public final Object readObject(): 读取一个对象
+		//读取对象时，需要对其进行强制转换
+	
+	【反序列化操作】2：
+		为了防止序列化对象后修改类信息，造成报错，需要在类中定义：
+		private static final long serialVersionUID = 1L（自定义）
+		//设置序列版本号
+
+
+	【注意事项】：对集合进行序列化时，集合内的元素必须也实现Serializable接口，如果元素内还定义了其他自定义类也需要实现Serializable接口
+
+
+
+
+
+打印流： //主要用于将异常信息放入文件
+
+	try{
+		int i = 1/0;	
+	}catch(Exception e){
+		e.printstackTrace(new PrintStream("aaa.txt")); 
+	}
+
+	构造方法： public PrintStream(String fileName):使用指定的文件名创建一个新的打印流
+	
+	改变流向方法：
+		System.setOut(PrintStream ps);

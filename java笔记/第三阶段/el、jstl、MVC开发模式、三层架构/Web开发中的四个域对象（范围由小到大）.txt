@@ -1,0 +1,61 @@
+# Web开发中的四个域对象（范围由小到大）
+
+**简介：**
+
+page(jsp有效)  request(一次请求) session(一次会话)application(当前web应用)
+
+page域指的是pageContext.
+
+request域指的是requestHttpServletRequest
+
+session 域指的是 sessionHTTPSession
+
+application 域指的是 applicationServletContext
+
+之所以他们是域对象，原因就是他们都内置了map集合，都有setAttribute getAttribute方法。
+
+他们都有自己固定的生命周期和作用域。这四个对象的生命周期(生命周期就是值对象的创建到销毁的期间)：
+
+
+
+
+
+**四个域对象的声明周期：****
+
+pageContext：jsp页面被执行，生命周期开始，jsp页面执行完毕，声明周期结束。
+
+request:用户发送一个请求，开始，服务器返回响应，请求结束，生命周期结束。
+
+session:用户打开浏览器访问，创建session(开始),session超时或被声明失效，该对象生命周期结束。
+
+application：web应用加载的时候创建。Web应用被移除或服务器关闭，对象销毁。[结束]。
+
+
+
+
+
+**注意：****
+
+Page只在当前jsp有效，每次请求分别对应不同的request。
+
+ 
+
+Request只在当前请求有效，每次请求分别对应不同的request域。
+
+ 
+
+Session只在一次会话中有效，会话结束就无法取到数据了。
+
+ 
+
+四个域对象在选择的时候，能用范围小的绝不用范围大的：
+
+page:数据只是暂时存在集合，在jsp页面的其他地方要用，用page(页面中自定义的map)。
+
+ 
+
+Request:数据只是做显示的，看完了就没用了。就存request域，请求转发，Servlet产生的处理结果（数据）交给jsp显示，数据转发可以带数据。
+
+ 
+
+Session：数据给用户看完了，一定还要用，会话结束了就没用了。

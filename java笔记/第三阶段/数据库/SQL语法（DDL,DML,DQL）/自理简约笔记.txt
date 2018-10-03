@@ -1,0 +1,214 @@
+数据库（DataBase）简称：DB：
+	
+	概念：用于存储和管理数据的仓库。
+	
+	特点：
+		1.持久化存储数据，其实就是一个文件系统。
+		2.方便存储和管理数据
+		3.使用了同一的方式操作数据库 -- 通过SQL语句操作
+
+	常见的数据库软件： 详见pdf文档2.2
+
+	mysql的目录结构：
+		1.数据库：文件夹（安装好后默认有4个，分别是：mysql、performance_schema、information_schema、test）
+		2.表：文件（.frm结尾的文件）
+		3.数据
+
+
+
+
+CMD中操作操作数据库：
+	
+	查看windos服务窗口： services.msc
+
+	登录Mysql：
+		1.mysql -uroot -p密码
+		2.mysql -hIP地址 -uroot -p密码
+		3.mysql --host=IP地址 --user=root --password=密码
+		4.mysql -hIP地址 -P端口号 -uroot -p密码
+
+	退出mysql： exit 或 quit
+
+
+
+
+
+SQL语句分类：
+	1.DDL：用于对数据库及表进行增删改查
+	2.DML：用于对数据进行增删改
+	3.DQL：用于对数据进行查询
+	4.DCL: 用于定义数据库的访问权限及安全级别。
+
+
+
+常用数据类型：
+	1. int：整数类型
+		* age int,
+	2. double:小数类型
+		* score double(5,2)
+	3. date:日期，只包含年月日，yyyy-MM-dd
+		4. datetime:日期，包含年月日时分秒	 yyyy-MM-dd HH:mm:ss
+	5. timestamp:时间戳类型	包含年月日时分秒	 yyyy-MM-dd HH:mm:ss	
+		* 如果将来不给这个字段赋值，或赋值为null，则默认使用当前的系统时间，来自动赋值
+
+	6. varchar：可变字符串
+		* name varchar(20):姓名最大20个字符
+		* zhangsan 8个字符  张三 2个字符
+
+	7. char:固定长度的字符串
+		* sex char（1）： 输入姓名只能是一个字
+
+
+
+
+
+DDL操作数据库：
+
+	增：
+		1.创建一个数据库
+			create database 数据库名；  
+		2.如果数据库名没有被使用则创建数据库
+			create database if not exists 数据库名; 
+		3.如果数据库名没有被使用，则创数据库，并指定编码格式
+			create database if not exists 数据库名 character set 字符集名；
+		
+
+
+	删：
+		1.删除指定数据库
+			drop database 数据库名; 
+		2.如果数据库存在，则将其删除
+			drop database if exists 数据库名;  
+	
+	改：
+		1.修改指定数据库的编码格式
+			alter database 数据库名 character set 字符集名；
+	
+	查：
+		1.查询所有的数据库
+			show databases；  
+		2.查询指定数据库的编码格式
+			show create database 数据库名； 
+
+
+
+DDL操作表：  //数据类型查看pdf7.2.2
+	
+	增：
+		1.创建一张表：
+		create table 表名(
+			列名1 数据类型1，
+			列名2 数据类型2，
+			...
+			列名n 数据类型n
+		);
+		【注意】：最后一列，不需要加逗号
+
+		2. 复制一张表
+			create table 表名 like 被复制的表名；
+	
+	删：
+		1.删除指定表
+			drop table 表名；  
+		2.如果指定表存在，则将其删除
+			drop table if exists 表名； 
+			
+	改：
+		1.修改表名称
+			alter table 表名 rename to 新表名;  
+		2.修改表的编码格式
+			alter table 表名 character set 字符集名;
+		
+		3.添加一列
+			alter table 表名 add 列名 数据类型； 
+		4.修改列名及数据类型
+			alter table 表名 change 原列名 新列名 新数据类型；
+ 			
+		  仅修改列数据类型
+			alter table 表名 modify 原列名 新数据类型；
+			
+		5.删除指定列
+			alter table 表名 drop 列名；  
+
+	查：
+		1.查看数据库中的所有表名
+			show tables;  【前提】：需要use 数据库名；
+			show tables from 数据库名；
+		2.查看表的结构的字符集：
+			show create table 表名；
+		3.参看表结构
+			desc 表名；
+
+
+
+DML和DQL操作数据：
+	
+	增：
+		1.添加数据
+			insert into 表名（列名1,列名2...）values(值1，值2...);
+			insert into 表名 values(必须给所有列赋值);
+			insert into 表名 values(),()...； //一次写入多条信息
+
+	删：
+		1.删除一行数据
+			delete from 表名 where 条件；
+		2.删除所有数据
+			delete from 表名;【不建议使用，删除一次会执行一次，效率低】
+			truncate table 表名；【推荐用，先删除表，再创建空表】
+		
+	改：
+		1.修改指定行，指定值
+			update 表名 set 列名1 = 值1，列名2 = 值2... where 条件；
+		2.修改所有行，指定值
+			update 表名 set 列名1 = 值1，列名2 = 值2...;
+
+	查：
+		1.多字段查询
+			select 列名1，列名2... from 表名;  
+			//字段顺序可以改变，查询结果会根据写入顺序显示
+		2.查询所有信息
+			select 所有列名 from 表名；
+			select * from 表名；
+		3.去除重复字段【distinct】
+			select distinct 列名1，列名2... from 表名；
+		4.列表计算示例：
+			select 列名1，列名2，列名1+列名2 from 表名；
+		  如果列名1为null，希望运算不为null
+			select 列名1，列名2，ifnull(列名1,0)+列名2 from 表名；
+			【参数分析】：ifnull（参数1，参数2）
+				参数1：出现null值的列名
+				参数2：期望将null变为的值
+		5.给列取别名示例
+			select 列名1 as 名字1，列名1+80 as 名字2 from 表名;
+			【as关键字可以省略】
+
+
+
+DQL条件查询操作数据：
+	
+	1.where字句后跟条件
+		select * from 表名 where 字段名 = 值；
+	2.运算符
+		① >、<、<=、>=、=、!= (表示不等也可用<>)
+			select * from 表名 where 字段名 != 值；
+		② between...and   //表示闭区间[值1，值2]
+			select * from 表名 where 字段名 between 值1 and 值2；
+		③ in（值1，值2...）
+			select * from 表名 where 字段名 in （值1，值2...)；
+		④ any（值） //表示满足括号中任意一个即可
+		⑤ all（值） //表示需要满足括号中所有值
+		
+		⑥ like :  模糊查询
+			select * from 表名 where 字段名 like "马%";
+
+		【补充】：
+			模糊查询不区分大小写，需要写成：
+				select * from where binary name like "%A%";  //这样只会查询含有大写字母A的信息，小写字母的不会出现
+			查询第二个字符是下划线的信息：
+				select * from where name like "_$_%" escape "$";   //这样通过自定义字符，可将第二个下划线_转译为普通下划线
+
+		⑦ is null //判断字段值是否为null
+			select * from 表名 where 字段名 is not null；
+		⑧ （and 与 &&）、（or 或 ||）、（not 非 !）
+			select * from 表名 where 字段名 = 值1 || 字段名 > 值2；
+			select * from 表名 where not 字段名 = 值； 

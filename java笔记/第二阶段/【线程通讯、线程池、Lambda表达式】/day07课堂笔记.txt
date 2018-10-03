@@ -1,0 +1,125 @@
+多线程：
+	线程的启动方式：
+		class MyTread extends Thread{
+			public void run（）{
+			
+			}
+		}
+		
+		new MyTread().start();
+		
+		class MyRunnable implements Runnabel{
+			public void run（）{
+			
+			}
+		}
+		
+		Runnabel runnable = new MyRunnable();
+		new Thread(runnable).start();
+		new Thread(runnable).start();
+		
+		Runnabel优点：
+			1、可以实现多个线程共享同一个业务资源
+		
+		
+		-------------------------
+		new Thread(){
+			public void run（）{
+			
+			}
+		}.start();
+		
+		new Thread(new Runnable(){
+			public void run（）{
+			
+			}
+		}).start();
+		
+	
+	多线程存在问题，解决方案
+		并发的原因：cpu抢占的随机性，同一个资源进行多语句的执行
+	
+		锁机制解决同步问题：
+			同步代码块 -- 单例设计模式（懒汉式）
+			同步方法 -- StringBuffer StringBuilder
+			
+			Lock锁
+			Lock lock = new ReentrantLock()；--互斥锁
+			lock.lock();
+			//需要锁定的代码
+			lock.unlock();
+	
+	
+	线程状态：
+		新建
+		可运行
+		锁阻塞
+		计时等待：Thread.sleep(1000),wait(1000)
+		无限等待：wait()
+		终止状态
+		
+==================================================
+
+	****多线程间通讯：wait()/notify()/notifyAll();
+	
+		Lock.newCondition()---Condition
+			condition.await()
+			condition.await(1000)
+			
+			condition.signal()
+			condition.signalAll()
+			
+		多线程间通讯：多个线程间做信息（信号）的交换 -- 等待唤醒机制
+		在什么样的场景下需要做线程间通讯：
+			多线程在操作同一个资源
+			多个线程在操作同一资源时，操作的方式不一样
+			多个操作上有先后的顺序要求
+			
+			
+		生产者和消费者的关系：
+			生产者 -- 线程
+			消费者 -- 线程
+			
+			公有资源： 包子铺 -- 包子
+			
+			详细代码见资料...
+			
+	
+	***线程池：线程容器，避免线程栈创建和销毁的时间开销，从而提升程序运行的效率
+	
+		***补充的内容（线程池的原理及系统提供的四个线程池的区别和使用场景）：明天讲
+	
+		***线程池提交任务的方法:
+			Future submit  //该方法内部实际还是调用execute方法执行任务，只不过在执行任务的前后，做了额外的逻辑判断，所以该方法的执行效率会比execute低
+				==》获取返回值 future.get()；//该方法是一个阻塞式的方法，会阻塞当前线程的执行
+			void execute //实际使用线程池提交任务时使用的方法，效率比submit高
+			
+			**以上两个提交任务的方法，通常情况下使用execute方法提交任务，如果需要返回值，那么使用submit方法
+	
+		
+	**Lambda表达式：新的思想，新的写法
+		传统写法：
+			new Thread(new Runnable(){
+				System.out.println("=====")
+			}).start();
+			
+		Lambda写法：可以理解为lambda表达式构建的就是一个匿名内部类，只是语法和传统的语法不一样而已
+			new Thread(()->System.out.println("=====")).start();
+		
+		
+		**Lambda标准语法：
+			(参数类型 变量名,参数类型 变量名...) -> {具体的业务代码}
+			
+			省略写法：
+				参数类型可以省略
+				如果只有一个参数，()可以省略
+				如果{}中只有一行代码，不管是否有return，{}都可以省略，有return的话 return也可以省略
+		
+		
+		
+		
+		
+		
+		
+		
+		

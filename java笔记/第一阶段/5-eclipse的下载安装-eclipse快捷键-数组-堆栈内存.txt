@@ -1,0 +1,98 @@
+集成开发环境（Integrated Development Environment，IDE）
+免费的使用最多的是：eclipse
+收费的使用最多的是：IntelliJ IDEA
+
+Eclipse的下载与安装：
+官网地址：http://www.eclipse.org
+下载：
+	1.点击右上角DOWNLOAD按钮
+	2.点击Download Packages
+	3.下载Eclipse IDE for Java EE Developers（企业版）或Eclipse IDE for Java Developers（标准版）
+	   然后选择64位进行下载
+	4.按下DOWNLOAD进行下载
+
+1.使用Eclipse开发的一般步骤：
+	a） 启动的时候，选择一个工作空间，用全英文
+	b） 左侧右键新建一个项目Project
+	c） 在src当中新建一个包Package
+	d） 新建一个类Class
+	e） 点击右侧，选择Run As-Java Application
+	字体大小设置：
+	window-Preferences-General-Appearance-Colors and Fonts-Basic-Text Font 然后点击Edit进行设置
+	导入项目：
+	任务管理栏点击右键选Import-General-Existing Projects into Workspace点击next（意思是找一个已经存在的项目），然后点击右上角Browse进行浏览，最后点击Finish
+	eclipse使用快捷键：
+	1.添加单行注释：ctrl+/   取消ctrl+/
+	2.添加多行注释：ctrl+shift+/    取消ctrl+shift+\
+	3.快速复制一行：ctrl+alt+上下箭头
+	4.向上向下移动代码：alt+上下箭头
+	5.删除当前行：ctrl+d
+	6.格式化：ctrl+shift+f
+	7.智能提示：alt+/
+	8.导入包快捷键：ctrl+shift+o
+	8.对关键字进行重命名：选中关键字alt+shift+r
+	
+2.数组：一种引用数据类型，容器，可以存放多个数据，但是数据类型一定统一
+
+3.定义数组：
+	a） 数据类型[] 数据名称;
+	b） 数据类型 数组名称[];(了解即可)
+	
+4.定义了数组，一定要进行初始化才能使用
+	a） 动态初始化：指定长度
+	b） 静态初始化：指定内容
+	
+5.动态初始化的格式：
+	a） 一个步骤：
+		数据类型[] 数组名称 = new 数据类型[数组长度];
+	b） 两个步骤：
+		数据类型[] 数组名称；
+		数组名称 = new 数据类型[数组长度];
+
+6.静态初始化的格式：
+	a） 标准格式：
+		数据类型[] 数组名称 = new 数据类型[]{元素1，元素2，元素3，...}；
+	b） 简便格式：
+		数据类型[] 数组名称 = {元素1，元素2，元素3，...}；
+	c） 标准格式可以拆分成为两个步骤，但简便格式不能拆分写必须一个步骤完成。
+	
+7.获取数组的长度：
+	数组名称.length；
+	注意：数组在内容当中一旦被创建，长度不可以改变。
+
+数组越界异常：
+	int[] arr = {1,3,5};
+	System.out.println(arr[3]);      //java.lang.ArrayIndexOutofBoundsException
+数组空指针异常：
+	int[] arr2 = {1,3,5};
+	arr2 = null;                     //arr2不在保存数组地址
+	System.out.println(arr2[2]);     //java.lang.NullPointerException
+
+二维数组定义方式：
+	方法一：
+	int[][] arr = new int[3][4];
+	其中：arr[0],arr[1],arr[2]表示三个一维数组地址，想要访问元素必须写成arr[0][0]格式
+	方法二：
+	int[][] arr = {{...},{...},{...}...};
+
+二维数组的遍历：
+	int[][] arr4 = {{11,12,13},{24,25},{36,37,38,39}};
+	for(int i = 0;i < arr4.length; i++){
+		for(int j = 0;j < arr4[i].length;j++){
+			System.out.println(arr4[i][j]);
+		}
+	}
+
+
+8.Java内存分为5个部分：
+	a） 栈（Stack）：存放局部变量
+	b） 堆（Heap）：new出来的东西堆。堆当中的数据有默认值规则：
+		默认值：
+		int类型默认值为0
+		浮点类型默认值为0.0
+		字符类型默认值为‘\u0000’（Unicode写法）
+		布尔类型默认值为false
+		引用类型默认值为null
+	c） 方法区（Method Area）：存放.class相关信息
+	d） 本地方法区（Native Method Area）：与操作系统相关
+	e） 寄存器（pc Register）：与CPU相关，性能极高。

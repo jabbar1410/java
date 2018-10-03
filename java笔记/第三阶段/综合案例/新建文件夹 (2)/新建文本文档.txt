@@ -1,0 +1,11 @@
+**jquery获取表单中的数据：**
+
+​	serialize（）将表单中的数据序列成key=value & key=value的形式。
+
+**BOM中location的属性，用于获取地址栏地址信息中?号后面的信息：**
+
+​	search    例如：url路径：http://sdfa.com?msg=aaa      获取得到：？msg=aaa4
+
+**加载完成定位到页面顶部:**
+
+window.scrollTo(0,0);   //参数为网页坐标

@@ -1,0 +1,224 @@
+﻿File
+
+	new File(String path);
+		绝对路径：从盘符开始的路径
+		相对路径：（普通的java项目）相对于项目根目录
+		
+	new File(String parentPath,String filename);
+	new File(File parentFile,String filename);
+	
+	
+	getName();
+	length();
+	getAbsolutePath();
+	getPath();
+	lastModified();
+	
+	exists();
+	isFile();
+	isDirectory();
+	
+	createNewFile();
+	mkdir();
+	mkdirs();
+	
+	delete();
+	
+	list(); -- String[]
+	listFiles(); -- File[]
+	listFiles(FileFilter filter); -- File[]
+	
+
+
+递归：
+	1、方法内部自己调用自己  -- 栈溢出
+	2、找出口
+	
+	描述:猴子吃桃子问题，猴子第一天摘下若干个桃子，当即吃了快一半，还不过瘾，又多吃了一个。
+	第二天又将仅剩下的桃子吃掉了一半，又多吃了一个。以后每天都吃了前一天剩下的一半多一个。
+	到第十天，只剩下一个桃子。试求第一天共摘了多少桃子？
+	
+	10 1
+	9  4
+	8  10
+	7  22
+	6  46
+	
+	前一天剩下的桃子数量是：（n-1）*2 +2
+		
+		getshenyu（int n）{
+			if(n == 1 ){
+				return 1;
+			}
+			
+			return getshengyu(n-1) * 2  +2;
+		}
+	
+	//打印某个目录下所有.java的文件名，要求子目录中的一起输出
+	public void printFileName(File file){
+		if(file != null && file.isDirectory()){
+			File[] files = file.listFiles(f->f.isDirectory() || f.getName().endsWith(".java"));
+			for(File f1 : files){
+				printFileName(f1);
+			}
+		}else{
+			if(file.getName().endsWith(".java")){
+				sout(file.getName());
+			}
+		}
+	}
+	
+==============================
+io流：在内存和系统磁盘间进行数据传输的通道,非常消耗资源的操作
+	操作三步骤：
+		1、创建io流对象（建立通道）
+		2、进行读写操作
+		3、关闭通道-释放资源
+
+	数据流向分：
+		输入流：系统磁盘-->内存
+		输出流：内存-->系统磁盘
+	数据操作形式分：
+		字节流：以字节为单位进行数据的传输
+		字符流：以字符为单位进行数据的传输
+	
+	流向和操作形式细分：
+		字节输入流
+			InputStream
+			
+				共性方法：
+					close();
+					int read(); 读取到的字节，如果没有读到，返回-1（该操作了解即可）
+					int read(byte[] bytes); 将读取的数据存入bytes数组，返回值是读到的数据长度，如果没有更多数据，返回-1
+			
+				常用子类:
+					FileInputStream
+						
+		
+		字节输出流
+			OutputStream
+				共性方法：
+					close();
+					flush(); --字节流中基本不需要用，字符流时需要使用
+					
+					write(int b)
+					write(byte[] bytes);
+					write(byte[] bytes,int off,int len) //off表示从哪个脚标开始写，len表示写多少个字节
+					
+				常用子类：
+					FileOutputStream
+					
+					
+			字节流完成文件的复制（可以复制任意文件，包括文本文件）：
+				需求：当前工程下有一个文件 美女.jpg  将该文件复制到 当前 工程下的copy夹下
+				
+					FileInputStream fis = new FileInputStream("美女.jpg");
+					FileOutputStream fos = new FileOutputStream("copy\\mv.jpg");
+					
+					byte[] bytes = new byte[1024];
+					int len;
+					
+					while((len=fis.read(bytes)) != -1){
+						fos.write(bytes,0,len);
+					}
+					
+					fos.close(); //先用后关，后用先关
+					fis.close();
+						
+		
+		****注意：中文字符由多个字节组成 -- 所以，如果想读取文本文件的一部分，不可以使用字节流读取，因为无法确定一次读多少个字节才是正确的
+							但是，如果是做文件拷贝，可以使用字节流完成，因为是将整个内容进行读写操作
+		
+		字符输入流
+			Reader
+				共性方法：
+					close();
+					
+					int read(); --一次读一个字符，int表示读取到的字符，如果没有读取到返回-1
+					int read(char[] chars);--一次读取一个字符数组，并将读取到的数据存入chars中，返回值为读取的字符数量，如果没有读取到数据，返回-1
+				常用子类：
+					FileReader -- 内部用的还是FileInputStream
+		
+		字符输出流
+			Writer
+				共性方法：
+					close();
+					flush(); --将字符缓冲区中的数据刷到文件中
+					
+					write(int c); -- 写入一个字符
+					write(char[],int off,int len) --写入一个字符数组的一部分
+					write(char[]) -- 写入一个字符数组
+					write(String str) -- 写入一个字符串
+				
+				常用子类：
+					FileWriter -- 内部用的还是FileOutputStream
+	
+			***注意：flush运用：	
+				对字节流而言，该方法不调用不影响数据进文件
+				对字符流而言，如果不关闭流资源，数据是在缓冲区保存的，是不会直接进到文件，可以使用flush方法，将缓冲区的数据刷到文件中
+				
+				flush：可以调用多次
+				close：只能调用一次
+				
+				
+	**注意：为了保证资源一定能够被释放，io流对象的释放必须放大finally代码块中
+	
+Properties -- 讲数据库的连接时需要用到
+	重点掌握读取配置文件信息的操作即可：
+		Properties properties = new Properties();
+		properties.load(new FileInputStream("db.properties")); //会自动将配置文件中的键值对信息封装到Properties对象中
+		
+		String url = properties.getProperty("url"); //通过固定的key获取变化的value值
+		String username = properties.getProperty("username");
+		String password = properties.getProperty("password");
+	
+	
+
+		
+	
+	
+补充内容：
+	
+	经典的面试题：HashTable和HashMap的区别：
+
+		HashTable线程安全的，效率低
+		HashMap线程不安全，效率高
+		
+		HashTable是不允许有null键值的
+		HashMap可以有null键值
+		
+		如果需要线程安全的HashMap对象：
+			① 可以选择HashTable，但是这个对象很旧了，后期没有做更多的维护优化动作
+			
+			② ConcurrentHashMap
+			
+			③Collections.synchronizedMap(hashmap)
+			
+			
+		
+	======java中的编解码问题（字符问题，乱码问题）	
+	String str
+	 str.getBytes() --- byte[]  --->字符串转byte[] 这个过程叫 编码
+	 
+	 new String(bytes); --- String --->byte[]转字符串 这个过程叫 解码
+	 
+	 str.getBytes() --> 默认字符集（工作空间配置的字符集）
+	 str.getBytes(“gbk/utf-8”)
+	 
+	 new String(bytes) -->默认字符集（工作空间配置的字符集）
+	 new String(bytes,"gbk/utf-8")
+	 
+	 
+	 str.getBytes() -->byte[]
+	 new String(bytes,"gbk");-->乱码
+	 
+	 str.getBytes() -->byte[]
+	 new String(bytes,"utf-8");-->正确中文
+ 
+
+	
+	
+	
+	
+	
+	

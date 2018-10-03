@@ -1,0 +1,158 @@
+io流
+	流向：
+		输入：磁盘--》内存
+		输出：内存--》磁盘
+		
+	操作数据形式：
+		字节流
+		字符流
+		
+	字节输入流
+		InputStream
+			close
+			
+			int read();(了解)
+			int read(byte[] bytes);
+			
+			FileInputStream
+			
+	
+	字节输出流
+		OutputStream
+			close();
+			flush（对字节流而言，调用不调用无所谓）
+			
+			write(int b);(了解)
+			write(byte[] bytes)(了解)
+			write(byte[] bytes,int off,int len)
+			
+			FileOutputStream
+			
+		复制文件的需求：
+			try(FileInputStream fis = new FileInputStream("mv.jpg");
+				FileOutputStream fos = new FileOutputStream("jk.jpg")){
+				byte[] bytes = new byte[1024];
+				int len;
+				while((len=fis.read(bytes)) != -1){
+					fos.write(bytes,0,len);
+				}
+			}catch(Exception e){
+			
+			}
+			
+	***需求：读取一个文本文件的一部分数据，
+	
+	字符输入流
+		Reader
+			close();
+			
+			int read();(了解)
+			int read(char[] chars)
+			
+			FileReader
+			
+	
+	字符输出流
+		Writer
+			close(); --底层也会将缓冲区中的内容刷到磁盘，调完该方法后，流通道就关闭了，后续不可以在操作
+			flush(); --- 将字符流缓冲区中的内容刷到磁盘的操作，调用完该方法后，字符输出流可以继续操作
+			
+			write(int c)(了解)
+			write(char[] bytes)(了解)
+			write(char[] bytes,int off,int len)
+			write(String str)
+			
+			FileWriter
+		
+Properties:(掌握一下操作)
+	Properties properites = new Properties();
+	properites.load(new FileInputStream(""));
+	
+	properites.getProperty("url");
+	
+==================================================	
+****缓冲流：对基本流的功能进行增强（装设者设计模式）
+	BufferedInputStream(InputStream)
+	BufferedOutputStream(OutputStream)
+		以上两个高效流的使用：非常消耗内存的，内部有数组的拷贝动作，是消耗一部分效率的
+		实际选择时，如果我们能够明确我们操作的文件是一个大文件，使用基本流，把基本流的byte数组容量放大 32*1024
+			如果我们没有办法确定我们操作的文件大小，此时选择使用高效流
+	
+	BufferedReader(Reader)
+		readLine();
+	BufferedWriter(Writer)
+		newLine();
+
+****转换流 -- 字符流和字节流之间的转换
+	编码： str.getBytes();/str.getBytes("gbk");  --- 字符/字符串转字节
+	解码： new String(byte[] bytes);/new String(byte[] bytes,"gbk") -- 字节转字符/字符串
+	
+	乱码的根本原因:编解码过程中，使用的码表（字符集）不统一
+	
+	InputStreamReader：
+		磁盘文件（字节） ----》 内存（字符） ---》字节流通向字符流的桥梁
+		new InputStreamReader(InputStream is) === new FileReader("");  (该构造了解)
+		new InputStreamReader(InputStream is，"gbk/utf-8")
+	
+	OutputStreamWriter：
+		内存（字符）---》磁盘文件（字节） ---》 字符流通向字节流的桥梁
+		new OutputStreamWriter(OutputStream os) === new FileWriter("");(该构造了解)
+		new OutputStreamWriter(OutputStream os,"gbk/utf-8")
+	
+
+序列化流（了解）--- 将一个java中的对象写到一个文件中
+	ObjectOutputStream
+		--writeObject
+反序列化流（了解）--- 将文件中的数据读入到内存，以一个对象的形式接收
+	ObjectInputStream
+		--readObject
+	
+	***序列化：将对象以文件的形式存储（持久化）
+		被序列化的对象对应的类必须实现Serializable接口
+
+
+打印流（了解）
+	try{
+		int i = 1/0;
+	}catch (Exception e){
+		e.printStackTrace(new PrintStream("ps.txt"));
+	}
+	
+*****重点掌握的流对象（基本流必须掌握，buffer流以及转换流需要明确使用场景）
+	
+	InputStream
+		BufferedInputStream
+		**FileInputStream
+		
+	OutputStream
+		BufferedOutputStream
+		**FileOutputStream
+		
+	Reader
+		InputStreamReader
+			**FileReader
+		BufferedReader -- readLine
+		
+	Writer
+		OutputStreamWriter
+			**FileWriter
+		BufferedWriter -- newLine
+		
+
+学有余力：RandomAccessFile -- 实现多线程下载的一个核心类
+			--seek(long pos)
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+	
+	

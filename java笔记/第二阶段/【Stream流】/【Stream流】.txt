@@ -1,0 +1,112 @@
+常用的函数式接口：
+
+	位置: 主要在java.util.function包中
+
+
+Supplier<T>接口：（生产型接口）
+	抽象方法：  T get();  //用来获取一个泛型参数指定类型的对象数据(生产数据)
+
+Consumer<T>接口：（消费型接口）
+	抽象方法： void accept(T t) //消费一个数据，其数据类型由泛型参数决定。（消费数据） 
+
+	默认方法： Consumer<T> andThen(Consumer<? super T> after) 【消费的参数要相同】
+		//先用一个接口消费一次参数，再用第二个接口消费一次参数
+	用法示例：
+		concumer.andThen(concumer2).accept(参数)；
+		//还可以多次调用
+		concumer.andThen(concumer2).andThen(concumer3).accept(参数)；
+
+
+Predicate<T>---条件判断的接口	//T为参数
+	抽象方法： boolean test(T t)  //判断传递的该类型对象是否符合条件
+
+	默认方法：
+		1.与 and     one.and(two).test(t)
+		2.或 or	   one.or(two).test(t)		
+		3.非 negate    one.negate().test(t)
+		
+
+Function<T,R>---类型转换   //T为参数，R为返回值，将T--》R
+	抽象方法： R apply(T t) //根据类型T的参数获取类型R的结果
+
+	默认方法：andThen    one.andThen(two) 
+		//进行了两次转换，相当于
+			one.apply(T);
+			two.apply(one.apppy(T))
+
+
+
+
+
+
+Stream---流式编程思想
+	优点：维护代码的便利性
+
+	特点：流只有在调用终止方法时，才会进行延时方法
+Stream流：
+	概念：Java 8当中的“流”其实就是Stream接口的对象
+	JDK提供了一个流接口：java.util.stream.Stream<T>
+
+	如何获取流？
+		1.Collection集合获取流
+			ArrayList<String> list = new ArrayList<>();
+			Stream<String> streamA = list.stream();
+		2.通过数组获取流
+			String[] arrayStr = {"Hello","world","Java"};
+			Stream<String> streamB = Stream.of(arrayStr);
+			//of方法为参数为可变参
+		3.map集合获取流 【只能通过key、value或者entry来获取流】
+			map.keySet().stream()
+			map.values().stream()
+			map.entrySet().stream()
+
+	【延迟方法】：（方法返回流对象）
+		1.Stream<T> map(用于转换的Lambda表达式)  //获取流之后，可以使用映射方法
+		//映射：就是将一个对象转换成为另一个对象，把老对象映射到新对象上
+
+		2.Stream<T> filter(能产生boolean结果的Lambda)：过滤方法：如果参数Lambda产生了true，则要元素；如果产生了false，则不要元素
+
+		3.Stream<T> limit(long maxSize)  //如果集合当前长度大于参数则进行截取（从0索引开始截取参数个的元素，就是取集合前几个），否则不进行操作
+
+		4.Stream<T> skip(long n)  //跳过前参数个元素，得到后面的元素，如果参数大于元素个数，会得到一个长度为0的空流
+
+
+
+	【终结方法】：
+		1.void forEach(Lambda表达式)：对流中的每一个元素进行遍历,【每一个元素都要进行操作】
+		//参数Lambda表达式必须是一个能够消费一个参数，而且不产生数据结果的Lambda。
+		2.long count() //获取元素个数，返回值为long
+
+		
+	【静态方法】：
+		1.concat（Stream a，Stream b）  //将两个流进行合并，【内部会对两个流分开执行】
+		//用法：Stream stream = Stream.concat(streamA，streamB);
+
+
+【注意事项】：
+	1.Stream流只能消费一次，即在使用终止方法时会close流
+
+	2.如果是并发流，forEach方法并不保证元素逐一消费动作在流中是有序被执行的
+
+
+【扩展】:
+	Stream ---> 集合或数组：
+		转数组：
+		1.Object[] arr = streamA.toArray（）
+		2.String[] arr2 = streamA.toArray(String[]::new)
+
+		转集合：
+		1.List<T> list = streamA.collect(Collectors.toList);
+		2.Set<T> set = streamA.collect(Collectors.toSet);
+
+	并发流：
+		Stream.of().parallel();
+		流名称.stream().parallel();
+		集合名称.parallelStream();
+			
+			-->并发流内部使用多线程机制处理流中的数据，它使用的线程池是ForkJoinPool--该线程池默认创建时，核心线程数是当前cpu核数
+			
+			---》当数据量少，并发流并不存在任何优势，因为在创建这种流时，需要创建线程池对象，处理效率会比较慢
+			--》当处理大数据量的数据，并且在处理过程中不要求顺序，使用这种流
+					
+			如果在使用并行流进行数据处理时，一定要注意线程安全问题

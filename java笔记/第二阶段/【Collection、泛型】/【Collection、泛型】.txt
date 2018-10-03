@@ -1,0 +1,153 @@
+集合概述：集合是java中提供的一种容器，可以用来存储多个数据。
+
+分类：集合按照其存储构造可以分为两大类，分别是单列集合java.util.Collection和双列集合java.util.Map
+
+
+
+
+
+Collection接口:
+	概述：单列集合类的根接口，用于存储一系列符合某种规则的元素，他有两个重要的接口，分别是java.util.List和java.util.Set。
+	
+	List和Set的区别：
+		List:元素有序、元素可重复（有序：存数据和取数据的顺序相同）
+			ArrayList  LinkedList  Vector
+		Set：元素无序、而且不可重复，没有索引
+			HashSet  LinkedHashSet  TreeSet
+
+	常用功能：
+		public boolean add(E e):  把给定的对象添加到当前集合中
+		public void clear():  清空集合所有的元素
+		public boolean remove(E e):  把给定的对象在当前集合中删除
+		public boolean contains(E e):  判断当前集合中是否包含指定的对象
+		public boolean isEmpty():  判断当前集合是否为空
+		public int size():  返回集合中元素个数
+		public Object[] toArray(): 把集合中的元素，存储到数组中（要用Object[]接受）
+		public boolean addAll(Collection<? extends E> c): 将制定集合中的元素添加到此集合
+		public boolean removeAll(Collection<?> c):  删除指定集合中包含的所有此集合的元素
+
+集合工具类Collectrions：
+	方法：shuffle()对集合进行随机排序
+
+
+
+Itertor迭代器：(Iterator为接口)
+	位置：java.util.Iterator
+	作用：主要用于遍历Collection中的元素
+	
+	创建方法：
+		public Iterator<E> iterator()  //获取集合对应的迭代器，用来遍历集合中的元素 
+		//迭代：：即Collection集合元素的通用获取方式。在取元素之前先要判断集合中有没有元素，如果有，就把这个 元素取出来，继续在判断，如果还有就再取出出来。一直把集合中的所有元素全部取出。这种取出方式专业 术语称为迭代。
+		格式：迭代器类型 迭代器名称 =  集合对象.iterator();
+	
+	常用方法：
+		1.public E next()  //返回迭代的下一个元素（就是取一个元素），每次获取之后会指向下一个元素
+		
+		2.public boolean hasNext()  //如果仍有元素可以迭代，则返回true(就是集合中还有元素就返回true)   
+		注意：如果集合中没有元素了，再使用next就会报NoSuchElementException异常
+		      如果在遍历集合时，对集合进行add和remove操作会发生并发异常ConcurrentModificateionException
+
+	【注意事项：迭代器遍历只能使用一次，想要用迭代器重写进行遍历，需要创建新的迭代器】
+
+
+
+
+增强for:   //IDEA快捷键： 集合名称.for
+	概念：增强for循环(也称for each循环)是JDK1.5以后出来的一个高级for循环，【专门用来遍历数组和集合的】。它的内部原 理其实是个Iterator迭代器，所以在遍历的过程中，【不能对集合中的元素进行增删操作】。
+
+	格式：
+		for(元素的数据类型 变量 ：Collection集合或数组){
+			//操作代码
+		}
+
+	【注意】：新for循环必须有被遍历的目标。目标只能是Collection或者是数组。新式for仅仅作为遍历操作出
+
+
+
+
+
+泛型：
+	好处：将运行时期的ClassCastException，转移到了编译时期变成了编译失败。 避免了类型强转的麻烦。
+
+	运用场所：可以在类或方法中预支地使用未知的类型
+	
+	提示：一般在创建对象时，将未知的类型确定具体的类型。当没有指定泛型时，默认类型为Object类型
+
+	
+	
+	【特点：泛型在定义的时候不具体，使用的时候才能变得具体。在使用的时候确定泛型的数据类型】
+
+1.定义使用含有泛型的类： //泛型代表未来的类型，未知的类型
+	定义格式：
+		修饰符 class 类名<代表泛型的变量> {  }
+
+	示例：
+		public class GenericClass<MVP>{    //建对象时传递的是什么类型，MVP就变成什么
+			private MVP mvp;
+			public void setMvp(MVP mvp){
+				this.mvp = mvp;
+			}
+			public MVP getMvp(){
+				return mvp;
+			}
+		} 
+
+2.含有泛型的方法：
+	定义格式：
+		修饰符 <代表泛型的变量> 返回值类型 方法名(参数){   }
+
+	示例：
+		public class GenericMethod{
+			public <T> void show(T t){
+				System.out.println(t.getClass());	
+			}
+		}
+	使用泛型方法：
+		GenericMethod gm = new GenericMethod();
+		gm.show("sdfasdf");
+		gm.show(123.13);    //调用方法传递参数时，确定了泛型的类型
+
+	特殊示例：
+		public <E> void method(Integer i, E e){
+			i.parseInt((String) e);  //此方法参数需要String类型，而e是不确定的，所以不强制转换为String类型，编译会报错
+		}
+	
+
+3.含有泛型的接口：
+	定义格式：
+		修饰符 interface 接口名<代表泛型的变量> {   }
+	
+	示例：
+		public interface GenericInterface<E>{
+			public abstract void add(E e);
+			public abstract E get();
+		}
+	
+	a.定义类时确定泛型的类型
+		public GenericDemo implements GenericInterface<String>{}
+
+	b.始终不确定泛型的类型，直到创建对象时，确定泛型的类型
+		public GenericDemo<E> implements GnericaInterface<E>{}
+
+		//创建对象
+		GenericDemo<String> gd = new GenericDemo<>{};
+
+
+
+
+
+
+
+泛型通配符：
+	//不知道接受什么类型的参数是可以使用泛型通配符
+	符号：<?>
+		//此时只能接受数据，不能往该集合中存储数据
+
+
+通配符高级使用---受限泛型：
+	泛型的上限：
+		格式：类型名称<? extends 类> 对象名称
+		意义：只能接收该类型及其子类
+	泛型的下限：
+		格式：类型名称<? super 类> 对象名称
+		意义：只能接收该类型及其父类

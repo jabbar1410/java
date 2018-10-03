@@ -1,0 +1,193 @@
+JDBC：
+
+	概念：
+
+	基础使用步骤：
+		1.导入jar包
+		2.注册驱动
+		3.创建数据库连接对象 Connection
+		4.定义sql语句
+		5.获取执行sql语句的对象 Statement
+		6.执行sql，接受返回结果
+		7.处理结果
+		8.释放资源
+
+	【导包】：
+		1.右键模块new--directory
+		2.在文件中找到mysql-connector-java-5.1.37-bin.jar，拷贝进文件夹
+		3.右键驱动文件，选择add as library
+	
+
+常用对象：  //使用的jdbc对象，实现的是java中的接口
+
+	1.Drivermanager：驱动管理对象
+	2.Connection：数据库连接的对象	【需要释放资源】
+	3.Statement：执行sql的对象	【需要释放资源】
+	4.ResultSet：结果集对象		【需要释放资源】
+	5.PreparedStatement：执行sql的对象，比Statement功能更强大	【需要释放资源】
+
+
+	DriverManager：
+		功能： 
+			1.注册驱动  //原理查看老师笔记
+				Class.forName("com.mysql.jdbc.Driver");
+			2.获取数据库连接	//乱码处理，看讲义4.4.3
+				static Connection  getConnection(String url, String user, String password);
+				参数：
+					*url
+						MySQL的语法： jdbc:mysql://ip地址（域名）:端口号/数据库名称
+						例子：jdbc:mysql://localhost:3306/db2
+						
+						细节特殊：如果连接本机数据库服务器，且端口号为3306，url可简写为：jdbc:mysql:///数据库名称 【注意有三个/】
+					*user：用户名
+					*password：用户密码
+
+
+	Connection: 数据库连接对象
+		功能：
+			1.获取执行sql的对象
+				*Statement createStatement()
+				*PrepareStatement prepareStatement(String sql)
+			2.管理实务
+				*开启实务：setAutoCommit(boolean autoCommit) :将参数设为false，即开启事务
+					*在执行sql之前开启事务
+				*提交事务：commit（）
+					*当所有sql执行完提交事务
+				*回滚事务：rollback（）
+					*在catch中回滚事务
+
+
+	
+	Statement：	//用于执行静态SQL语句并返回其生成的结果的对象。
+		功能：
+			1.执行sql
+				* boolean execute(String sql): 可以执行任意的sql
+				* int executeUpdate(String sql): 执行DML、DDL语句
+					//返回值为sql影响的行数，如果影响行数=0，说明执行成功，反之执行成功
+				* ResultSet executeQuery(String sql): 执行DQL语句
+
+
+
+	ResultSet:
+		方法：
+			1.boolean next（）： 游标向下移动一行，返回值表示是否有下一行
+			2.getXxx(参数): 获取数据
+				* Xxx: 表示想获取值的数据类型    如：int getInt（），String getString()
+				*int类型参数：代表列编号，第几列
+				*String类型参数：代表列名称   【注意】：如果参数取了别名，需要写别名进行查询
+
+		使用步骤：
+			1.判断是否为最后一行用next（）
+			2.游标向下移动一行也用next（）
+			3.获取数据
+
+
+	【重点】
+	PreparedStatement：【后期都用这个对象执行sql的增删改查】
+		特点： 表示预编译的SQL语句的对象。 SQL语句已预编译并存储在一个PreparedStatement对象中。 然后可以使用该对象多次有效地执行此语句。
+	
+		使用原因：
+			在使用Statement对象调用方法，执行sql语句时会出现SQL注入问题，存在安全问题。
+			例如：
+				输入密码：a' or 'a' = 'a   //演示时，输入要用nextLine（）
+				sql语句："select * from user where name = '" + user + "' and num = '" + password + "'"
+
+		
+		使用方法：
+			1.定义sql语句,用？作为参数的占位符
+				String sql = "select * from user where name = ?  and num = ?" 
+			2.同过连接对象获得PreparedStatement对象,并传递sql语句
+				PreparedStatement ps = con.preparedStatement(String sql);
+			3.给？占位符赋值，使用方法setXxx(参数1，参数2)
+				* Xxx为：数据类型
+				* 参数1：？的编号位置（即第几个？），编号的位置从1开始
+				* 参数2：？要赋的值
+			
+			4.调用方法执行语句executUpdate（）、executeQuery()方法等，这些方法没有参数，不用传递sql语句
+
+
+
+
+自定义JDBC工具类：
+	1.定义属性用于接受从配置文件中读取到的信息
+		 private static String url;
+   		 private static String user;
+   		 private static String password;
+   		 private static String driver;
+	2.使用静态代码块在，类加载时给属性赋值
+		static{
+        			Properties pps =null;
+        		try {
+            			pps = new Properties();
+            			//动态获取配置文件的绝对路径
+           			 //获取类加载器对象
+            			ClassLoader cl = JDBCUtils.class.getClassLoader();
+            			URL res = cl.getResource("user.properties");  【注意，配置文件只能放在src目录下】
+            			//获取绝对路径
+            			String path = res.getPath();
+            			pps.load(new FileReader(path));
+       			 } catch (IOException e) {
+           			 e.printStackTrace();
+       			 }
+        			url = pps.getProperty("url");
+        			user = pps.getProperty("user");
+        			password = pps.getProperty("password");
+        			driver = pps.getProperty("driver");
+        		try {
+            			Class.forName(driver);
+        		} catch (ClassNotFoundException e) {
+            			e.printStackTrace();
+        		}
+   		 }
+	3.定义获取连接对象方法
+  		//定义方法获取连接对象
+    		public static Connection getConnection() throws SQLException {
+        		return DriverManager.getConnection(url,user,password);
+   	 	}
+	4.定义资源释放方法
+		//定义方法关闭流
+    		public static void closeResource(Statement sta, Connection con){
+        		if(sta != null){
+            			try {
+                			sta.close();
+           			} catch (SQLException e) {
+                			e.printStackTrace();
+            			}
+        		}
+
+        		if(con != null){
+            			try {
+                			con.close();
+            			} catch (SQLException e) {
+                			e.printStackTrace();
+            			}
+        		}
+    		}
+
+    		//方法重载
+   		public static void closeResource(ResultSet rs, Statement sta, Connection con){
+        		if(rs != null){
+            			try {
+               				rs.close();
+            			} catch (SQLException e) {
+                			e.printStackTrace();
+            			}
+        		}
+
+        		if(sta != null){
+            			try {
+                			sta.close();
+            			} catch (SQLException e) {
+                			e.printStackTrace();
+            			}
+        		}
+
+        		if(con != null){
+            			try {
+                			con.close();
+            			} catch (SQLException e) {
+                			e.printStackTrace();
+            			}
+        		}
+    		}
+	

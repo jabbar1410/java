@@ -1,0 +1,127 @@
+集成开发环境（Integrated Development Environment，IDE）
+免费的使用最多的是：eclipse
+收费的使用最多的是：IntelliJ IDEA
+
+IntelliJ的下载与安装：
+	官网地址：www.jetbrains.com
+
+IDEA的项目结构：
+	项目-Project --> 模块-Module --> 包-Package --> 文件-File
+
+使用IDEA开发的一般步骤：
+	1.选择Create New Project创建一个项目
+	2.在New Project界面选择Empty Project然后点击next，输入项目名称和保存路径
+	3.在Project Stucture界面选择Modules(模块)，点击“+”new Module
+	4.左侧默认java，右侧Moudul SDK中找到JDK的安装路径（到JDK即可，不用到bin），点击next，为Module name取一个名称，点击finish，再点击OK
+	5.在module中的src中右键创建Package，并命名  //命名规则如：cn.itcast.day04.demo01
+	6.在Package中右键新建Java class，并取好类名即可使用
+
+字体大小设置：
+	File--Settings--Editor--Font   //Font(字体)选Consolas,Size选16
+背景颜色：
+	File--Settings--Editor--Color Scheme
+
+快捷键修改：
+	File--Settings--Keymap  然后点击右侧小齿轮，选择Duplicate接回车，然后选择Main menu--Code--Completion然后选择Basic,双击它选择Remove Ctrl+空格，再双击选AddKeyboard Shortcut,修改为Alt+/,然后ok,再Remove 
+
+IDEA常用快捷键：
+	alt + /		 代码提示
+	alt + enter      导入包，自动修正代码
+	crtl + y         删除光标所在行
+	ctrl + d         复制光标所在行的内容，插入光标位置下面
+	ctrl + alt + L   格式化代码
+	ctrl + /         单行注释，再按取消注释
+	ctrl + shift + / 选中代码注释，多行注释，再按取消注释
+	alt + insert        自动生成代码，toString,get,set等方法
+	alt + shift + 上下箭头     移动当前代码
+	ctrl + alt + v     快速新建对象，例如：new Scanner()
+	ctrl + alt + u     鼠标选中指定类，使用快捷键可以查看此类的父类即接口，按住alt可以放大
+	ctrl + L     	   打开源代码后，可以对关键字进行搜素
+	ctrl + p    	   查看方法可以传递的参数类型
+
+?	ctrl+F 和 ctrl+R  选中要替换的文本，先ctrl+f ，再ctrl+r，上选框写入要替换的文本，下选框写替换值，最后replaceALL	
+
+?	ctrl+alt+t   在idea中添加try/catch的快捷键 
+
+?	ctrl + h 查看选中类的子类
+
+
+
+IDEA的项目关闭打开与模块导入：
+	关闭项目：  File--Close Project
+	打开项目：  Open--找到项目名称（文件夹图标有小黑窗口），点击New Window按钮
+
+	新建模块：  File--new--module
+	导入模块：  File--Project Structure--Mofules--"+"--import Module--选择要导入的模块然后一直next最后ok
+
+如何定义一个没有返回值的方法：
+	修饰符 void 方法名称（参数类型 参数名称）{
+		方法体
+		return； //最后一行return一般都是省略不写的
+	}
+
+如何定义一个有参数方法：
+	三要素：
+	格式：
+	修饰符 返回值类型 方法名（参数类型 参数名称）{    //修饰符为public static
+		方法体
+		return 返回值；        //return的作用：1.结束当前方法 2.带着返回值交给调用处
+	}
+	注意事项：
+	1.返回值类型必须和返回值对应
+	2.如果参数有多个，那么使用逗号进行分隔
+	3.如果不需要参数，那么小括号可以留空
+
+调用方法的三种方式：
+	a） 单独调用：方法名称（实际参数）；
+	b） 打印调用：System.out.println（方法名称（实际参数））；
+		//方法体执行，且会把返回值打印出来
+	c） 赋值调用：数据类型 变量名称 = 方法名称（实际参数）；
+	关于名称的两个问题：
+	1.变量的名称能不能和方法的名称一样？ 可以.
+	2.如果有两个方法，每一个方法当中都有一个同名的变量，是否可以？ 可以.
+	
+使用方法的注意事项：
+	1.对于有返回值的方法，可以使用单独调用、打印调用和赋值调用
+	2.但对于无返回值的方法，只能使用单独调用，不能使用打印调用或者赋值调用
+	3.方法应该定义在类当中，但是不能在方法当中再定义方法，即不能让嵌套方法
+	4.方法定义的前后顺序无所谓
+	5.方法定义之后不会执行，如果希望执行，一定要调用：单独调用、打印调用、赋值调用
+	6.如果方法有返回值，那么必须写上"reture 返回值;"
+		public static int getMax(int a,int b){
+			if(a > b){
+				return a;
+			}else{
+				return b;  // 若没有写else语句并进行return，就没有满足以上条件
+			}
+		}
+	7.return后面的返回值数据，必须和方法的返回值类型对应
+	8.对于void没有返回值的方法，不能写"return 返回值；",只能写"return；"。
+	9.对于void没有返回值的方法，"return；"可以省略不写。
+	10.一个方法当中可以有多个return语句，但是必须保证同时只有一个return会执行，两个return不能连写。
+
+ 
+
+重载（Overload）：多个方法的名称相同，但是参数列表不同。
+
+重载中，什么叫做参数不同：
+	a） 参数的个数不同
+	b） 参数的类型不同
+	c） 参数的多类型顺序不同
+	
+重载中，与什么无关
+	a） 与返回值类型无关         //就是返回值类型不同仍然不能构成重载，编译会出错
+	b） 与参数名称无关
+	c)  与修饰符名称无关         //就是修饰符不写也不能构成重载，编译会报错
+
+参数传递：也就是在调用方法的时候，向方法当中传入数据的动作
+	【形式参数】例如：
+	public static int (int a, int b){...} //这里的a和b为形式参数
+	【实际参数】例如：
+	int num = sum(10,20);  //这里的10和20位实际参数
+
+参数传递的两项规则：
+	a） 对于基本类型（以及String）来说，形式参数的操作【不会】影响实际参数
+	b） 对于引用类型（除了String）来说，形式参数的操作【会】影响实际参数。
+		//因为引用类型参数调用时是传递堆内存中的地址
+	

@@ -1,0 +1,113 @@
+异常：
+	概念： Java代码在运行期间发生的问题就是异常。
+
+
+
+异常的继承体系：
+	Throwable它是Java语言中所有错误和异常的超类。它有两个子类：Error（错误） 和 Exception（异常）
+	Error和Exception的区别：
+		Error:   出现Error错误程序停止，必须修改代码才能程序才能继续执行
+		Exception:   出现Exception错误程序停止，可以将异常处理掉，让程序继续执行
+
+
+
+异常中的关键字：
+	1.throw：在方法内部，抛出异常
+		//throw后面必须写new 对象，必须是异常的对象，必须是Exception或者它的子类
+	2.throws：用于在方法的声明上，标明此方法可能出现的异常，throws后面必须写异常类的类名
+
+	注意： 
+		1.调用了一个抛出异常的方法，调用者就必须处理，不处理，编译失败
+		2.异常如果被抛出，后面的程序不在进行，必须对异常进行处理才能让程序继续执行
+
+	示例：
+		public static void main(String[] args) throws Exception{
+			int[] arr = null;
+			getArray(arr);
+		}
+		public static int getArray(int[] arr) throws Exception{
+			if(arr == null){
+				throw new Exception("传递的数组不存在");
+			}
+			int i = (arr.lenth - 1) * 2;
+			return i;
+		}
+
+
+
+异常的处理方式：
+	1.通过throws申明异常让虚拟机JVM进行处理（出现异常，终止程序，显示异常信息）
+	2.通过try...catch...finally
+		格式：
+			try{
+				被检测的代码（可能出现异常的代码）
+			}catch(异常类名 变量){
+				异常的处理方式
+			}finally{
+				必须要执行的代码
+			}
+	3.异常多catch处理：
+		格式：		
+			try{
+				被检测的代码（可能出现异常的代码）
+			}catch(异常类名 变量){
+				异常的处理方式
+			}catch(异常类名 变量){
+				异常的处理方式     //【方法throws了多少异常，就catch多少异常】
+			}catch(异常类名 变量){
+				异常的处理方式
+			}finally{
+				必须要执行的代码
+			}
+			
+			细节：catch小括号中，写的是异常类的类名，它有顺序要求
+				1.平级异常（没有继承关系），顺序没有要求
+				2.上下级关系异常，越高级的父类写在下面
+
+
+			finally：无论程序是否有异常出现，程序必须执行（io流中释放资源应用较多）
+
+
+
+子父类方法重写是异常处理:
+	1.父类方法没有抛出异常，子类重写方法也不能抛出异常
+	2.父类方法抛出异常，子类重写可以抛出异常，但是范围不能比父类大
+	3.父类方法没有抛出异常，子类重写方法调用了抛异常的方法时只能使用try...catch处理异常
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+异常分为编译异常和运行异常:
+编译异常：调用了抛出异常的方法，不处理编译失败(try  throws)---(除RuntimeException类以外的类)
+运行异常:RuntimeException和他的所有子类以及（有间接继承关系的类）子类的子类的异常，都属于运行时期异常。
+        NullPointerException,ArrayIndexOutOfBoundsException等都属于运行时期异常.
+
+运行异常的特点：
+        方法内部抛出的是运行异常，new XXXException。
+        方法的声明上，【不需要加throws语句】,调用者不需要处理。
+        设计原因：
+                运行异常，本就不能发生，但万一发生，需要程序人员
+                停止程序修改源代码。
+
+                运行异常：一旦发生，不需要处理，修源代码，运行异常一旦发生
+                ，后面的代码没有执行的意义。

@@ -1,0 +1,86 @@
+	
+线程池内部的原理补充：
+	public ThreadPoolExecutor
+	(int corePoolSize,  //核心线程数
+     int maximumPoolSize, //最大线程数
+     long keepAliveTime, // 存活时间
+     TimeUnit unit, //存活时间的单位 常用的：毫秒 
+     BlockingQueue<Runnable> workQueue, //任务的缓存队列
+     ThreadFactory threadFactory, //创建线程对象的工厂
+     RejectedExecutionHandler handler) //拒绝策略
+		
+	线程池对象初始创建时，内部是没有任何线程的，当我们向线程池提交任务（Runnabe）的时候，才会去创建线程对象
+	
+	execute方法的实现：
+		1、先判断当前提交的任务数是否小于核心线程数，如果小于则创建线程对象执行任务
+		2、如果我们提交的任务数量已经超过了核心线程数，任务会进入到任务缓存队列等待
+		3、如果任务的缓存队列已经满了，这个时候会尝试着创建新的线程去执行任务
+			什么情况下会创建成功：最大线程数相对于核心线程数如果还有空余，此时能够创建成功，并立即执行任务
+			如果创建不成功， 看拒绝策略是怎么处理的：
+				AbortPolicy：暴力拒绝，会抛出异常，线程池会挂掉（常用）
+				
+				CallerRunsPolicy：现在提交的这个任务是在哪个线程中提交的，那么该任务就交给这个线程执行
+				DiscardOldestPolicy：将缓存队列中最老的那个任务抛弃掉，然后把当前的任务放入缓存队列中
+				DiscardPolicy：直接将当前的任务抛弃
+				
+				
+			缓存队列：
+				ArrayBlockingQueue：内部是是数组结构，初始化时需要传递初始容量 fifo -- 增删慢，查询快
+				LinkedBlockingQueue：内部是链表结构，默认容量是int能表示的最大值 fifo -- 增删快，查询慢
+				PriorityBlockingQueue：内部任何可以实现先后的排序 （可以设置任务执行的优先级）
+				SynchronousQueue：不缓存任务，只做任务的一个传递
+				
+				
+		long keepAliveTime, // 存活时间
+		TimeUnit unit, //存活时间的单位 常用的：毫秒 
+			以上两个参数决定：最大线程数相对于核心线程数多出来的线程的空闲存活时间
+			
+			
+		类比公司：	
+			开发人员只能是3个，最多6个人（三个外包）
+			需求来了，招人
+			
+			再来第四个需求时，还能找人吗？ --不能， 需求暂时放在等待
+			不停的提需求；
+			
+			需求过多，想办法找外包人员解决一部分需求
+			
+			外包人员解决完后，如果没有后续需求，解除外包关系
+			
+	java中默认四个线程池的内部实现及使用场景：
+		Executors.newFixedThreadPool(3) -- new ThreadPoolExecutor(3, 3,0L, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>()
+			可以非常好的控制系统的内存，可以承载大并发量的访问
+			
+		Executors.newCachedThreadPool() --  new ThreadPoolExecutor(0, Integer.MAX_VALUE,60L, TimeUnit.SECONDS,new SynchronousQueue<Runnable>())
+			可以处理超短时大量的任务，不可以承载大并发量访问 （慎重使用）
+			
+		Executors.newSingleThreadExecutor() -- new ThreadPoolExecutor(1, 1,0L, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>())
+			多任务的串行执行
+			
+		Executors.newScheduledThreadPool(2) -- ThreadPoolExecutor(int corePoolSize,int maximumPoolSize,long keepAliveTime,TimeUnit unit,BlockingQueue<Runnable> workQueue)
+			任务的定时调度
+		
+		
+		
+		
+	如果我们是自定义线程池，那么核心线程数取多大是最合理的？
+		任务时间很短（毫秒级-秒级），cpu密集型任务，核心线程数 cpu核数+1
+		任务时间很长（分钟级） io密集型任务，核心线程数 cpu核数*2
+		
+		
+	通过自定义线程池完成线程名称的自定义：
+		ThreadPoolExecutor threadPool = new ThreadPoolExecutor(3, 3, 0l, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(), new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread thread = new Thread(r);
+                thread.setName("==");
+                return thread; //返回线程对象，并给线程对象设置名称
+            }
+        });
+		
+		
+学有余力：
+	volatile关键字
+	Thread.yield();
+	Thread.join();
+	

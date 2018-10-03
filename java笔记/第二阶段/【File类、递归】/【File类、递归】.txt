@@ -1,0 +1,73 @@
+File类：
+	概述：java.io.File 类是文件和目录路径的抽象表示，主要用于文件和目录的创建，查找和删除等操作。【可以根据路径将我们系统中的文件或者文件夹，封装成一个File类型对象】
+
+	构造方法：
+		1.public File(String pathname): 通过将给定的路径名字符串转换为抽象路径名来创建新的File实例
+		2.public File(String parent, String child): 从父路径名字符串和子路径名字符串创建新的File实例
+		3.public File(File parent, String child): 从父抽象路径名和子路径字符串创建新的File实例
+
+	提示：
+		1.一个File对象代表硬盘中实际存在的一个文件或者目录
+		2.无论该路径是否存在文件或者目录，都不影响File对象的创建
+
+
+	常用方法：
+		1.public String getAbsoulutePath(): 返回此File的绝对路径名字符串（从盘符开始的路径）
+		2.public String getPath(): 将此File转换为路径名字符串（文件的封装路径）
+		3.public String getName(): 返回由此File表示的文件或目录的名称
+		【文件名称带有后缀、文件名可以没有后缀、文件夹名称可以有后缀、同一文件夹下文件和文件夹的名称不能重复】
+		4.public long length(): 返回由此File表示的文件的长度（获取字节个数）
+			//只能用于文件，用在文件夹上会有问题
+		5.long lastModified() //获取文件上次修改的时间
+
+
+	【绝对路径和相对路径的区别】：
+		绝对路径： 从盘符开始算起的路径
+		相对路径： 在一个项目中，相对于当前项目的路径（以项目文件夹作为路径的起点）
+
+
+	判断功能的方法：	
+		1.public boolean exists(): 此File表示的文件或目录是否实际存在
+		2.public boolean isDirectory(): 此File表示的是否为目录
+		3.public boolean isFile(): 此File表示的是否为文件
+		【提示】：如果isFile返回为false，不一定为 文件夹，有可能什么也没有
+
+
+
+	创建删除功能方法：
+		1.public boolean createNewFile(): 当且仅当具有该名称的文件尚不存在时，创建一个新的空文件
+		2.public boolean delete(): 删除由此File表示的文件或目录
+		【注意】：a.删除的文件及文件夹，永久删除，不会进入回收站
+			  b.delete方法，如果此File表示目录，则目录必须为空才能删除
+		3.public boolean mkdir(): 创建由此File表示的目录
+		4.public boolean mkdirs(): 创建由此File表示的目录，包括任何必需但不存在的父目录（创建多级目录）
+		注意：delete方法，如果此File表示目录，则目录必须为空才能删除
+
+
+	目录的遍历：
+		1.public String[] list(): 返回一个String数组，表示该File目录中的所有子文件或目录（获取所有文件或文件夹的名字）
+		2.public File[] listFiles(): 返回一个File数组，表示该File目录中的所有的子文件或目录
+		//调用listFiles方法的File对象，表示的必须是实际存在的目录，否则返回null，无法进行遍历
+
+		3.public File[] listFiles(FileFilter filter): //通过传递文件过滤器接口实现类，过滤掉不需要的文件及文件夹。实现类中需要重写accept(File pathname)，返回值为false过滤，返回值为true保留 
+
+
+
+
+
+
+
+
+递归：
+	概述：指在当前方法内调用自己的这种现象
+	
+	示例：
+		public void method(){
+			method();
+		}
+	
+	注意：递归一定要有条件限制，保证递归能停下来，次数不要太多，否则会发生栈内存溢出
+		1.要有边界条件，跳出递归的条件
+		2.如果帝国过深，会造成栈溢出（方法栈中方法过多）。
+		提示：a.内存溢出：堆内存溢出
+		      b.栈溢出：方法栈中方法过多

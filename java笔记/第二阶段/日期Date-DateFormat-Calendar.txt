@@ -1,0 +1,74 @@
+时间原点(格林尼治)： 公元1970年1月1日，午夜00:00:00  此时得到毫秒值为0
+
+获取当前系统日期的毫秒值： System.currentTimeMillis()  返回值为long类型参数
+
+【注意事项】：时间和日期的计算，必须依靠毫秒值计算
+
+
+
+时间和日期类Date： 
+	位置：java.util.Date
+	构造方法：
+		空参构造：Date()
+		Date date = new Date();  //Date重写过toStrirng方法，打印对象显示当前系统时间和日期
+		有参构造：Date(long s)
+		Date date = new Date(1000);  //传递毫秒值，打印对象显示毫秒值对应的日期
+	方法：
+		【日期转换为毫秒值】：
+		long getTime()   //返回的是毫秒值，将Date表示的日期，转换为毫秒值
+		【毫秒值转换为日期】:
+		void setTime(long time)   //将日期对象，设置到指定毫秒值上
+
+
+日期格式化DateFormat:  
+(此类为抽象类无法直接创建对象，因此可以使用其子类SimpleDateFormat调用其方法)
+	位置：java.text.SimpleDateFormat
+	实现日期格式化步骤：【Date转换为String】
+		1.创建SimpleDateFormat对象，在类构造方法中，写入字符串的日期格式（格式自定义）
+		2.调用SimpleDateFormat的方法format对日期进行格式化
+			String format(Date date) 传递日期对象，返回格式化后的字符串(根据自己定义的格式)	//调用的是父类DateFormat中的format方法
+	日期格式：（可用API在SimpleDateFormat类中查看）
+		y   年份
+		M   月份
+		d   月中的天数
+		H   0-23小时
+		m   小时中的分钟
+		s   秒
+	示例：
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH点mm分钟ss秒");
+			//定义格式时，表示时间日期的字母，不能作为时间的分隔
+		String date = sdf.format(new Date());
+		System.out.println(date);  //输出2018年06月22日 19点53分48秒
+
+	将字符串解析为日期对象步骤：【String转换为Date】
+		1.创建SimpleDateFormat的对象，在构造方法中，指定日期格式
+			SimpleDateFormat(String pattern)
+		2.子类对象，调用方法parse,传递String,返回Date
+			Date parse(String source)  //传入的时间格式必须和SimpleDateFormat构造方法定义的格式完全相同
+	示例：
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat(String pattern)
+		Date date = sdf.parse("1995-5-6")    //因为输入日期格式可能存在风险，如输入dsf-11-11,因此在方法中因抛出异常，在方法名括号后面写入throws Exception
+		System.out.println(date);  //输出Sat May 06 00:00:00 CST 1995
+
+
+
+日历类Calendar:
+(此类为抽象类，如需创建对象应该使用它的子类对象)
+	位置；java.util.Calendar
+	静态方法：
+		1.Calendar getInstance() 使用默认时区和语言环境获得一个日历,【返回值为子类的对象】，可以用本类对象接收
+	注意事项：外国的月份是0-11，所以想要得到本地的月份字段需要+1
+	
+	非静态方法：
+		1.int get(int field) //参数field为Calendar类中的字段（可通过API查看）,返回值为相应字段中的数值
+	用法示例：
+		Calendar cld = Calendar.getInstance(); //【获取子类对象用Calendar接收】
+		int = cld.get(Calendar.YEAR);  //用子类对象调用get方法
+==============================================================================================
+		2.void set(int field,int value)  //field 设置的是哪个日历字段，value 设置后的具体数值
+		  void set(int year,int month,int day) //传递年、月、日一起修改
+==============================================================================================
+		3.void add(int field, int amount)  //日历的偏移，将指定字段值向前或向后偏移，只需修改amount值的正负即可
+==============================================================================================
+		4.Date getTime()  //把日历对象转换成Date日期对象

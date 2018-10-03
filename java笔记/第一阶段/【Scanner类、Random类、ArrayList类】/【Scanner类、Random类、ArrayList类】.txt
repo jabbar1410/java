@@ -1,0 +1,102 @@
+API(Application Programming interface):
+	Java API是一本程序员的字典，是JDK中提供给我们使用的类的说明文档。
+
+Scanner类：
+	功能：可以实现键盘输入数据，到程序当中。
+	使用步骤：
+		1.导包
+			import 包路径.类名称；
+			import java.util.Scanner;
+			// 如果需要使用的目标类和当前使用类位于同一个包下，则可以省略导包语句不写
+			// 只有java.lang包下的内容不需要导包，其他的包都需要import语句。
+		2.创建
+			类名称 对象名 = new 类名称（参数）；
+			Scanner sc = new 类名称（System.in）;   //Scanner类没有空参构造方法
+		3.使用
+			对象名.成员方法名（）；
+			获取键盘输入的一个int数字：int num = sc.nextInt();
+			获取键盘输入的一个字符串：String str = sc.next()d;
+
+
+匿名对象：
+	创建格式：new 类名称();
+	使用格式：
+		new 类名称().成员变量名 = 变量值；
+		new 类名称().方法名();
+	注意事项：匿名对象一个只能使用唯一的一次，想再次调用需要创建新的对象
+	使用建议：如果确定有一个对象只需要使用唯一的一次，就可以用匿名对象。
+
+匿名对象作为方法参数：
+	public static void main(String[] args){
+		method(new Scanner(System.in));
+	}
+	public static void method(Scanner sc){
+		int i = sc.nextInt();
+	}
+
+匿名对象作为方法返回值：
+	public static void main(String[] args){
+		Scanner sc = method();
+		int i = sc.nextInt();	
+	}
+	public static Scanner method(){
+		return new Scanner(System.in);
+	}
+
+Random类：
+	功能：用来生成随机数字
+	使用步骤：
+		1.导包
+			import java.util.Random;
+		2.创建
+			Random ran = new Random();   // 小括号内留空即可
+		3.使用
+			获取一个随机的int数字（范围时int所有范围，有正负两种）：
+				int i = ran.nextInt();
+			获取一个随机的int数字（参数代表了范围，为左闭右开区间）： //参数需大于0
+				int i = ran.nextInt(3);	  //它的取值范围是[0,3),也就是0-2
+
+ArrayList集合：
+	特点：数组长度在程序运行期间不可改变，集合长度是可以随意改变的
+
+如何创建一个ArrayList集合？//<E> E为泛型，指存放什么类型的数据
+	a）导包：import.java.util.ArrayList
+	b）创建：ArrayList<泛型> List = new ArrayList<>();  
+						//JDK1.7开始，右侧<>中可以不写，但<>仍需要写
+	c）注意：泛型只能使用引用类型，不能使用基本类型。
+	d）集合直接打印对象名，得到的不是地址值，而是内容，如果没有内容打印[],因为ArrayList这个类重写了toSting方法
+	
+如何使用ArrayList集合，常用方法：
+	a）添加元素：
+		public boolean add(E element)	//参数类型与泛型一致，返回值类型为boolean
+		集合名称.add(数据)；      boolean 变量名 = 集合名称.add(数据);
+		//向ArrayList集合当中添加一个元素，参数是被添加的元素，而返回值一定是true值代表添加成功,对于ArrayList集合add添加一定成功，但对于其他集合add添加不一定成功
+	b）获取元素：
+		public E get(int index)	//参数为索引编号，返回类型为泛型，值为对应位置元素
+		集合名称.get(索引值);	 E 变量名 = 集合名称.get(索引值);
+	c）删除元素：
+		public E remove(int index) //参数为索引编号，返回类型为泛型，值为删除的元素
+		集合名称.remove(索引值);	 E 变量名 = 集合名称.remove(索引值);
+	d）获取长度：
+		public int size()	//返回值类型为int
+		int 变量名 = 集合名称.size();
+
+遍历ArrayList集合：  // IDEA中快捷键： 集合名称.fori
+	for(int i = 0; i < 集合名称.size(); i++){
+		System.out.println(集合名称.get(i));
+	} 
+	
+	
+如何让集合存储基本类型： // 集合不能存储基本数据类型
+		使用包装类（引用类型，包装类都在java.lang包下，不需要导包）:
+		int      对应	Integer
+		char     对应	Character
+		byte     对应	Byte
+		short    对应	Short
+		long     对应	Long
+		float    对应	Float
+		double   对应	Double
+		boolean  对应	Boolean
+   自动装箱：   基本类型  -->   包装类型
+   自动拆箱：   包装类型  -->   基本类型
+   //从JDK1.5开始，支持自动装箱和拆箱（也就是基本类型和包装类进行转换不需要操作，直接改名字即可）	

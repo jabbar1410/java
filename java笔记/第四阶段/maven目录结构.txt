@@ -1,0 +1,36 @@
+src
+├─main
+│  ├─filters
+│  │
+│  ├─java
+│  │  └─com
+│  │      └─micmiu
+│  │          ├─demoweb
+│  │          │  │ ....
+│  │          │  │
+│  │          │  └─utils
+│  │          │
+│  │          └─modules
+│  │
+│  ├─resources
+│  │  │  application.properties
+│  │  │  applicationContext-shiro.xml
+│  │  │  applicationContext.xml
+│  │  │  hibernate.cfg.xml
+│  │  │  log4j.properties
+│  │  │  spring-mvc.xml
+│  │  │  spring-view.xml
+│  │
+│  └─webapp
+│      │
+│      └─WEB-INF
+│
+└─test
+    ├─java
+    │  └─com
+    │      └─micmiu
+    │          ├─demoweb
+    │          │      TestOther.java
+    │
+    └─resources
+            application.properties

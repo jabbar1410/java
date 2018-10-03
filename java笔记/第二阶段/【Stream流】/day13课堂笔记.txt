@@ -1,0 +1,115 @@
+函数式接口：接口中有且只有一个抽象方法
+	@FunctionalInterface -- 规范代码编写
+	
+()->{}
+
+方法引用: 对象::方法
+	-- 标准lambda表达式的简写方式，生成的也是对象
+		|-标准的lambda表达式的{}只有一行代码
+		|-一行代码中涉及到的对象的参数必须和抽象方法的参数一致
+		
+	调用其他类的非静态成员方法：	
+		对象::方法
+	调用其他类的静态成员方法：	
+		类名::方法
+	调用某个类的父类的非静态成员方法：	
+		super::方法
+	调用某个类的本类对象非静态成员方法：	
+		this::方法
+	构造某个类的对象：
+		类名::new
+	构造数组：
+		数据类型[]::new
+		
+生成型：Supplier<T>
+		T get();
+
+消费型: Consumer<T>
+		void accept(T t);
+			andThen
+		
+==============================
+Predicate --条件判断的接口
+	boolean test(T t);
+
+Function<Q,H> -- 类型转换
+	H apply(Q q);
+	
+	
+	Function<T,R>{
+	
+		<V> Function<T,V> andThen(Function<R,V>){
+		
+		}
+	}
+	
+
+Stream  -- 流式编程思想
+	对集合或数组进行过滤、遍历操作的替代
+	
+	StringBuilder -- 链式调用 和流式编程不是一个概念
+		sb.append().append()
+		
+	Straem流式编程最大的好处：	
+		维护的便利性
+	
+	
+	Stream对象的获取
+		串行流：
+			Stream.of(T... t);
+			Collection:
+				.stream();
+				
+			Map:
+				.keySet().stream()
+				.values().stream()
+				.entrySet().stream()
+			
+		并发流：
+			Stream.of().parallel();
+			.stream().parallel();
+			.parallelStream();
+			
+			-->并发流内部使用多线程机制处理流中的数据，它使用的线程池是ForkJoinPool--该线程池默认创建时，核心线程数是当前cpu核数
+			
+				---》当数据量少，并发流并不存在任何优势，因为在创建这种流时，需要创建线程池对象，处理效率会比较慢
+					--》当处理大数据量的数据，并且在处理过程中不要求顺序，使用这种流
+					
+					如果在使用并行流进行数据处理时，一定要注意线程安全问题
+			
+			
+	
+	Stream对象常用方法：
+		filter --- 过滤元素
+		limit --- 取有限个元素
+		skip --- 跳过有限个元素
+		count --- 计数统计
+		forEach --- 遍历元素
+		map --- 将一个类型的流转换成另外一个类型的流（内部用到Function接口）
+		concat -- 将两个流合并成一个流
+		
+		
+	Stream转化成数组或者集合
+		.toArray
+		.collect(Collectors.toList())
+		.collect(Collectors.toSet())
+		
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

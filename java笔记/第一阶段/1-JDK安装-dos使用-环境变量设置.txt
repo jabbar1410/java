@@ -1,0 +1,74 @@
+数据存储的最小单位是：字节（Byte），它等于8bit（比特位）
+8 bit = 1 B 
+1024 B =1 KB 
+1024 KB =1 MB 
+1024 MB =1 GB 
+1024 GB = 1 TB
+
+1.JDK是开发工具，JRE是运行环境（类库），JVM是核心所在。JDK包含JRE，JRE包含JVM。
+JVM包括：javac.exe编译器、java.exe解释器
+
+Java语言的跨平台特性：
+该特性是由JVM实现的，我们编写的程序运行在JVM上，而JVM 运行在操作系统上，每个平台都有对应的JVM
+
+2.安装JDK：
+   a）路径当中不要有中文或者是空格
+   b）要单独取消外部公共JRE的安装
+   c)下载官网：www.oracle.com
+   d）Menu--Downloads and Trials--Java--All Java Downloads
+   e）新页面右上角New Downloads中选取下载版本
+   f）选好版本点击进入，再点击下载JDK，之后一定要点击Accept License Agreement
+   g）安装路径可以设置为：D:\Java\jdk-10.0.1\
+   h）公共JRE点击左侧箭头点击“此功能将不可用”
+
+3.命令提示符（cmd）
+   a）启动：开始+R，输入cmd回车
+   b）切换盘符：“盘符名称：回车”
+   c）进入文件夹：cd 文件夹名称
+   d）进入多级文件夹：cd 文件夹1\文件夹2\文件夹3
+   e）返回上一级：cd ..
+   f）返回盘符根路径：cd \
+   h）清空屏幕：cls
+   i）退出：exit
+   j）打开应用程序：输入路径全称D:\Java\jdk-10.0.1\bin\javac
+
+4.HelloWorld源代码编写注意：大小写、扩展名、符号、中英文。
+
+5.运行HelloWorld两个步骤：
+   a）编译：javac HelloWorld.java   //HelloWorld为文件名，也是程序的类名
+   b）运行：java HelloWorld
+
+6.Path环境变量的配置
+   a）新建变量名JAVA_HOME   变量值：D:\Java\jdk-10.0.1
+   b）写在path最前面如下：%JAVA_HOME%\bin；  //注意分号不要忘
+
+7.Notepad++基本使用，两个设置：设置-首选项-新建-默认语言用java而且右侧编码选
+  ANSI。
+   下载地址：http://notepad-plus-plus.org
+
+8.程序注释：
+   a）概念：对程序代码进行解析说明的文字，不影响程序运行。
+   b）单行注释：“//”开头，直到本行结束为止
+   c）多行注释：“/*”开头，“*/”结尾，中间的都是注释。
+   d）文档注释：“/**”开头，“*/”结尾。
+
+9.关键字
+   a）概念：被保留的、有特殊含义的词汇
+   b）特点：由小写字母组成，在Notepad++中能变色
+
+10.常量概念：程序运行期间，不可以发生改变的量
+
+11.常量分类
+   a）字符串常量：双引号，可以包含0-n个字符
+   b）整数常量：100、200、1024
+   c）浮点数常量：3.14、-2.5
+   d）字符常量：单引号，有且仅有一个字符
+	System.out.println('');  //此写法错误！！！，两个单引号之内必须要有一个字符
+   e）布尔常量：true、false，只有两个
+   f）空常量：null（不能直接用来打印输出）
+
+12.Java卸载
+   打开控制面板，点击卸载程序，找到Java卸载即可
+
+
+James Gosling  、、java之父

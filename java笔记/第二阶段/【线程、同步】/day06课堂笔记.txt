@@ -1,0 +1,116 @@
+多线程
+	**多线程的原理：
+		1、Thread.start() --- >新开了一个线程栈
+		2、在新开的线程栈中调用run方法 --- run方法会进入新开的线程栈
+		3、新开的线程栈就会和主线程栈去抢夺cpu的执行权 -- 并发
+
+	****多线程启动方式
+		public class MyThread extends Thread{
+			public void run(){
+				sout("===")
+			}
+		}
+		
+		new MyThread().start();
+		
+		
+		---
+		
+		public class MyRunnable implements Runnable{
+			public void run(){
+				sout("===")
+			}
+		}
+		
+		new Thread(new MyRunnable()).start();
+		
+		
+		Runnable的优点：
+			1、实现共有业务资源的共享
+			
+			
+		--------变种：匿名内部类形式-------------
+		new Thread(){
+			public void run(){
+				sout("===")
+			}
+		}.start();
+		
+		---
+		
+		new Thread(new Runnable{
+			public void run(){
+				sout("===")
+			}
+		}).start();
+		
+	
+	****多线程的问题及解决方案
+		多线程抢夺cpu执行权的随机性，会导致多线程操作同一资源时出现线程安全问题
+		
+		解决方案：锁机制
+			①同步代码块
+				synchronized(obj){
+					//需要锁定的代码
+				}
+				
+			②同步方法：（慎用）
+				public synchronized void xx(){
+				
+				}
+				
+			③使用Lock对象：jdk1.5新的api，使用更加灵活，语义更强
+	
+				Lock lock = new ReentrantLock(); -- 互斥锁
+				lock.lock(); --加锁
+				//需要锁定的代码
+				lock.unlock(); --释放锁
+				
+				
+				ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock(); -- 读写锁
+				reentrantReadWriteLock.writeLock().lock(); //获取写锁，执行锁定
+				//需要锁定的代码
+				reentrantReadWriteLock.writeLock().unlock();//获取写锁，解除锁定
+				
+				reentrantReadWriteLock.readLock().lock(); //获取读锁，执行锁定
+				//需要锁定的代码
+				reentrantReadWriteLock.readLock().unlock(); //获取读锁，解除锁定
+				
+				注意：
+					读锁：共享锁，共享锁和共享锁是可以并发的，共享锁和排他锁是互斥的
+					写锁：排他锁，排他锁和共享锁及排他锁都是互斥
+	
+	
+	***多线程的状态：
+	
+		新建：new了对象 但是没调用start方法
+		可运行：调用了start方法，正在抢夺cpu执行权或者正在运行run中的代码
+		锁阻塞：获取了cpu执行权，但是没有获取锁对象
+		计时等待：sleep或者 锁对象.wait(1000)
+			--sleep不会释放锁对象
+			--wait会释放锁对象
+		无限等待：锁对象.wait()
+		终止:线程执行结束
+		
+	
+	
+
+===============
+多线程的执行就是在抢占cpu的执行权
+	int i=10；//一条语句
+	
+	i++; //三条语句：取i变量对应的值，将i变量进行+1操作，将+1之后的值赋给i变量
+	
+	int b = i+10; //三条语句：
+	
+
+java开发的六大基本原则：（了解）
+	单一职责原则
+	开闭原则 -- 可以扩展类的功能，但是不可以修改类的源码
+	里氏代换原则 -- 父类引用接收子类对象（多态）
+	接口隔离
+	迪米特法则 -- 面向对象的封装思想
+	依赖倒置--父类引用接收子类对象（多态）
+	
+	===》低耦合高内聚
+	

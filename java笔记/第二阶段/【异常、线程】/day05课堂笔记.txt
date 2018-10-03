@@ -1,0 +1,117 @@
+异常：java中出现的问题；java--编译时出现的问题：编译时异常--》class--运行时出现的问题：运行时异常--》运行
+	java中是如何表示异常的？？ 以异常类对象的方式表示
+	
+	***体系结构/异常分类
+		Throwable
+			Error：程序员其实是可以处理的（try..catch）,系统抛出来的，不希望程序员处理
+			Exception:程序员其实是可以处理的（try..catch）
+				编译时异常（Exception）:在编译时会进行异常检查，必须在代码中显示地处理，运行时抛出（throw）
+				运行时异常（RuntimeException）：编译时不检查，不需要在代码中显示地处理，运行时抛出（throw）
+	
+	***异常的处理方式
+		throw：方法内部使用，抛出异常对象 throw new 异常对象 -- throw new ArrayIndexOutOfBoundsException
+		
+		处理异常的方式：
+			throws:在方法声明上声明异常，异常的处理交给方法的调用者  thows 异常类 --- throws ArrayIndexOutOfBoundsException
+		
+			try..catch
+				try{  --用户体验会好一些
+					可能出现异常的代码
+				}catch(FileNotFoundException e){
+				
+				}catch(Exception e){
+					
+				}
+		
+		
+				try{  -- 程序员偷懒做法
+					可能出现异常的代码
+				}catch(Exception e){
+					
+				}
+			finally{  -- 释放资源
+				一定会执行到的代码
+			}
+			
+			
+	面试题一：
+		final：修饰的类不能被继承，修饰的方法不能被复写，修饰的变量是常量
+		
+		finally：在异常处理结构中的关键字，其包含的代码一定是会执行到的，一般用来释放资源
+		
+		finalize：是Object中的一个方法，更快速回收垃圾对象
+		
+	面试题二：
+		public static void main(String[] args) {
+			int i = getI();
+			System.out.println(i);
+
+			int[] intArray = getIntArray(); //20
+			System.out.println(intArray[0]); //30
+		}
+
+
+		public static int getI(){
+			int i = 0;
+			try {
+				i = 10;
+				i = 1/0;
+				return  i;
+			}catch (Exception e){
+				i = 20;
+				return  i;
+			}finally {
+				i = 30;
+			}
+		}
+		public static int[] getIntArray(){
+			int[] arr = new int[1];
+			try {
+				arr[0] = 10;
+				int i = 1/0;
+				return  arr;
+			}catch (Exception e){
+				arr[0] = 20;
+				return  arr;
+			}finally {
+				arr[0] = 30;
+			}
+		}
+	
+	****异常自定义：携带数据 / 作为标记
+		如果是定义运行时异常，选择继承RuntimException
+		如果是定义编译时异常，选择继承Exception
+		
+
+多线程 -- 入门
+
+	进程：应用程序的执行单元，一个应用程序必须要有一个进程，一个应用程序可以有多个进程，而且每个进程会有自己的独立内存空间
+	线程：进程的执行单元，一个进程必须要有一个线程，一个进程也可以有多个线程
+		***java应用程序中，一个进程中的所有线程共享堆内存，但是栈内存是线程私有的
+
+
+	多线程的开启方式
+		方式一：
+			1、写一个类继承Thread
+			2、复写run方法
+			3、创建自定义Thread对象，调用start方法开启线程
+			
+		方式二：
+			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

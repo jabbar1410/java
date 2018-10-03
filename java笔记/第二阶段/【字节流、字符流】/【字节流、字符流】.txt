@@ -1,0 +1,241 @@
+======java中的编解码问题（字符问题，乱码问题）	
+	String str
+	 str.getBytes() --- byte[]  --->字符串转byte[] 这个过程叫 编码
+	 
+	 new String(bytes); --- String --->byte[]转字符串 这个过程叫 解码
+	 
+	 str.getBytes() --> 默认字符集（工作空间配置的字符集）
+	 str.getBytes(“gbk/utf-8”)
+	 
+	 new String(bytes) -->默认字符集（工作空间配置的字符集）
+	 new String(bytes,"gbk/utf-8")
+	 
+	 
+	 str.getBytes() -->byte[]
+	 new String(bytes,"gbk");-->乱码
+	 
+	 str.getBytes() -->byte[]
+	 new String(bytes,"utf-8");-->正确中文
+ 
+
+
+
+
+
+
+IO流是用来传输数据的技术
+	内存：断电之后内存消失
+	硬盘：断电之后数据任然存在
+
+
+
+IO流的流向划分：
+	内存<--硬盘 为Input输入，读
+	内存-->硬盘 为Onput输出，写
+	
+
+
+
+IO流的操作方式分类：
+	字节流：可以出来任何一种文件数据
+	字符流：只能处理纯文本文件
+	a）字节输入流
+	b）字节输出流
+	c）字符输入流：FileReader、BufferedReader
+	d）字符输出流：FileWriter、BufferedWriter
+
+
+
+
+
+
+IO操作体系：（定义在java.io包下）
+	【注意】：在内存和系统磁盘间进行数据传输的通道，非常消耗资源的操作，务必忘记关闭流
+
+	抽象父类：
+		字节流：
+			字节输入流:	InputStream
+			字节输入流：	OutputStream
+
+		字符流：
+			字符输入流：	Reader
+			字符输入流：	Writer
+
+
+
+字节输出流OutputStream:	//为抽象类，是所有输出流的超类
+	
+	方法：
+		1.public void close(): 关闭此输出流并释放与此流相关联的任何系统资源
+		2.public void flush(): 刷新此输出流并强制任何缓冲的数次字节被写出（在字符流中有作用体现）
+		3.public void write(byte[] b): 把字节数组中的内容写入到此输入流
+		4.public void write(byte[] b, int start, int len): 从指定的字节数组写入len个字节，从start索引开始
+		5.public abstarct void write(int b): 传递int类型数组，转成字节形式输出
+			//虽然参数为int类型四个字节，但是只会保留一个字节的信息写出
+
+
+文件输出流FileOutputStream：
+	
+	构造方法：
+		1.public FileOutputStream(File file): 创建File对象表示的文件，用于流写入
+		2.public FileOutputStream(String name): 创建指定名称的文件，用于流写入
+
+	数据追加续写：
+		1.public FileOutputStream(File file, boolean append): 创建文件输出流以写入由指定的File对象表示的文件
+		2.public FileOutputStream(String name, boolean append): 创建文件输出流以指定的名称写入文件
+	【提示】：这两个构造方法，参数中都需要传入一个boolean类型的值，true表示追加数据，false表示清空原有数据，这样创建的输出流对象，就可以指定是否追加续写
+
+
+	如何实现换行？  
+		a）Windows当中：\r\n 	
+		b）macOS当中：\r或者\n
+		c）Linux当中：\n
+	【提示】：在多个系统中兼容可以使用System.lineSeparator()作为换行符
+
+
+字节输入流InputStream：//为抽象类，是所有输入流的超类
+	
+	方法：
+		1.public void close(): 关闭此输入流并释放与此流相关联的任何系统资源
+		2.public abstract int read(): 从输入流读取数据的下一个字节
+		3.public int read(byte[] b): 从输入流中读取一些字节数，将它们存储到字节数值b中。
+		【提示】:1.通过read读取时，读取了一个字节，但是会自动提升为int类型，读取到最后返回-1
+			 2.通过read(byte[] b): 返回读取到的有效字节个数，读取到末尾返回-1，多次使用数组读取，每次读取多个字节，减少了系统间的io操作次数，从而提高了读写的效率，从而提高了读写的效率，建议开发中使用
+			
+
+
+
+
+【字节流的作用】：在Java程序中可以复制计算机中的任何一个文件，将来做文件上传和文件下载的核心思想，
+		【提示】：进行文件copy时，如果是小文件，byte[]数组长度设为1024，如果文件长度过兆，byte[]数组长度设为1024*8，进行关流时，后用先关
+	
+【字符流的租用】：字符流，只能操作文本文件，不能操作图片，视频等非文本文件。当我们单纯的读或者写文本文件时，使用字符流，其他情况使用字节流
+
+
+
+
+
+
+
+字符输入流Reader：//抽象类是所有读取字符流的超类
+	
+	方法：
+		1.public void close()：关闭此流并释放与此流相关联的任何系统资源
+		2.public int read():  从输入流读取一个字符，没有内容返回-1
+		3.public int read(char[] cbuf): 从输入流中读取一些字符，并将它们存储到字符数组cbuf中，没有内容了返回-1
+
+	【注意事项】：当使用字节流读取文本文件时，遇到中文字符，可能不会显示完整的字符
+		原因：在windos中的编码规则是GBK，它一个中文占用两个字节，在项目中默认使用UTF-8，它一个中文占3个字节
+		【所以】当需要读取中文的文件时，采用字符流读取
+	
+
+FileReader类：(便捷类，采用默认的编码表和默认的字节缓冲区)
+		//编码表：在windos中的编码规则是GBK，在IDEA中默认使用UTF-8
+		//字节缓冲区：一个字节数组，用来临时存储字节数据
+
+
+	构造方法：
+		1.FileReader(File file)
+		2.FileReader(String fileName)
+
+
+
+
+
+
+
+
+
+字符输出流Writer：//为抽象类，是所有字符流的超类
+
+	方法：
+		1.public abstract void close(): 关闭关闭此输出流并释放与此流相关联的任何系统资源。		//【先将数据从缓冲区刷新出去，再关闭流通道】
+		2.public abstract void flush(): 刷新此输出流并强制任何缓冲的输出字符被写出
+		3.public void write(int c): 写出一个字符
+		4.public void write(char[] cbuf): 将b.length字符从指定的字符数组写出此输出流
+		5.public abstract void write(char[] b, int start, int len): 从指定的字符数组写出len字符，从偏移量start开始输出到此输出流
+		6.public void write(String str): 写出一个字符串
+
+
+FileWriter类：
+	
+	构造方法：
+		1.FileWriter(File file)
+		2.FileWriter(String fileName)
+		3.FileWriter(File file，boolean append)	//追加书写
+		4.FileWriter(String fileName，boolean append)
+
+
+	【提示】：
+		1. 虽然参数为int类型四个字节，但是只会保留一个字符的信息写出。
+		2. 未调用close方法，数据只是保存到了缓冲区，并未写出到文件中
+
+
+	【关闭和刷新】：
+		因为内置缓冲区的原因，如果不关闭输出流，无法写出字符到文件中。但是关闭的流对象，是无法继续写出数据 的。如果我们既想写出数据，又想继续使用流，就需要 flush 方法了。 
+		flush ：刷新缓冲区，流对象可以继续使用。 	
+		close ：关闭流，释放系统资源。关闭前会刷新缓冲区
+		【提示】：即便是flush方法写出了数据，操作的最后还是要调用close方法，释放系统资源
+
+
+	内存----字符缓冲区（将字符解析为字节）-----硬盘
+
+
+
+
+
+
+IO的异常处理：
+		try-with-resource语句：
+		格式：
+			try（创建流对象语句，如果多个，使用“；”隔开）{
+				//读写数据	
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+
+
+
+
+
+属性集：
+	
+Properties类：（是Map的子类，继承于HashTable，拥有map中的所有方法）
+	//方便解析配置文件
+	
+	构造方法： public Properties(): 创建一个供的属性列表
+
+	重新定义的方法：
+		1.public Object setProperty(String key, String value): 保存一对属性
+		2.public String getProperty(String key): 使用此属性列表中指定的键搜索属性值
+		3.public Set<String> stringPropertyNames(): 所有键的名称的集合
+
+
+	与流相关的方法：
+		public void load(InputSteam inStream): 从字节输入流中读取键值对
+		//用于获取配置文件中的信息
+		【提示】：文本中的数据，必须是键值对形式，可以使用空格、等号、冒号等符号分隔
+
+		 void store(OutputStream out, String comments) ：把集合中的信息，存储到文件中
+			参数： 
+				out - 输出流。 
+				comments - 属性列表的描述。
+
+
+
+
+HashTable和HashMap的区别：
+
+		HashTable线程安全的，效率低
+		HashMap线程不安全，效率高
+		
+		HashTable是不允许有null键值的
+		HashMap可以有null键值
+		
+		如果需要线程安全的HashMap对象：
+			① 可以选择HashTable，但是这个对象很旧了，后期没有做更多的维护优化动作
+			
+			② ConcurrentHashMap
+			
+			③Collections.synchronizedMap(hashmap)
+

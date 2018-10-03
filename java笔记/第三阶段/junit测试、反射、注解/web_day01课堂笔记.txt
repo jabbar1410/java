@@ -1,0 +1,164 @@
+Supplier<T>
+	T get();
+	
+Consumer<T>
+	void accept(T t);
+	andThen(Consumer c)
+	
+Predicate<T>
+	boolean test(T t);
+	and()
+	or()
+	negate()
+	
+Function<T,R>
+	R apply(T t);
+	<Q> Function<T,Q> andThen(Function<T,R> f)
+	
+Stream -- 替代传统的集合或者数组的操作
+	Stream Stream.of(T... t);
+	Stream Collection.stream();
+	Stream Collection.parallelStream();
+	Stream Collection.stream().parallel();
+	
+	Map.keySet().stream();
+	Map.values().stream();
+	Map.entrySet().stream()
+	
+	.filter(Predicate).limit(3).skip(2).count();
+	.forEach(Consumer);
+	.map(Function);
+	
+	Stream.concat(Stream s1,Stream s2);
+	
+	Object[] objs = stream.toArray();
+	Integer[] ints = stream.toArray(Integer[]::new);
+	
+	stream.collect(Collectors.toSet());
+	stream.collect(Collectors.toList());
+	
+	
+===============================
+Junit测试
+	单元测试的基本步骤：
+		写一个测试类 -- XXXTest
+		写一个测试方法： -- testXX	
+			①、 必须是public修饰
+			②、 必须是无返回值的 void
+			③、 方法参数列表必须是空的
+		在测试方法上添加@Test注解
+		
+	****单元测试过程中，作为程序员，需要知道测试的业务整个运行过程，需要使用日志跟踪（后期会介绍从java中常见的日志输出框架：log4j、slf4j、logback...）
+
+反射：以对象的形式操作原本类中的内容（属性、方法、构造...）
+	作用：
+		① 打破原本类对象操作内容的局限性
+		② 提高代码的通用性，解耦
+		
+	类从写好到运行的过程有三个阶段：	
+		.java文件的阶段（源码阶段） --> 通过javac命令将.java文件编程.class文件的阶段（编译阶段）
+			-->运行阶段（通过类加载器将磁盘上的.class文件加载到内存，以Class对象表示给字节码文件）
+		
+	**Class -- 类的字节码对象，是反射技术的基础
+		类字节码对象的获取：
+			① Class.forName("类的全路径类名")  -- 静态代码块会执行
+				通过配置文件构建对象时使用
+			② 类名.class --- 静态代码块和构造代码块都不会执行
+				作为方法参数使用:xx(Person.class);
+					public void xx(Class<Person> clazz){}
+			③ 类对象.getClass(); -- 静态代码块和构造代码块都会执行
+				生成动态代理对象时使用
+			
+		获取类中成员变量：	
+			getFiled(String name)；
+			getFileds(); -- Filed[]
+			****getDeclaredFiled(String name)
+			****getDeclaredFileds()
+				
+		获取类的构造方法：
+			...
+			
+		获取类中成员方法：
+			...
+		
+		获取类名/构建实例
+			getName -- 全路径类名（包含包名的）
+			getSimpleName() -- 类名
+			newInstance();
+			
+	
+	**Filed -- 类中成员变量对象
+		setAccessible(true) -- 操作非public修饰的成员变量的前提
+		void set(Object obj,Object value)
+		Object get(Object obj)
+		
+	**Method
+		setAccessible(true); 
+		Object invoke(Object obj,Object... args)
+		getName();
+	
+	**Constructor
+	
+
+注解:就是一个给编译器和jvm虚拟机看的标识
+	作用：
+		① 规范代码编写
+		② 携带一些数据--在程序运行时解析注解获取数据
+		
+	****注解的定义：
+		@Target(ElementType.TYPE/METHOD/FILED)
+		@Retention(RetentionPolicy.RUNTIME/SOURCE/CLASS)
+		public @interface xx{
+			数据类型 属性名() [default 默认值];
+			...
+		}
+		
+		**数据类型：
+			八大基本数据类型
+			String
+			枚举
+			注解类型
+			Class
+			以上类型的一维数组
+			
+	****注解的使用：在类上、方法上、成员变量上声明注解，有属性，需要给属性赋值	
+		@注解名(属性名=属性值，....)
+		
+		*** 当注解中只有一个属性名为value的属性需要赋值，那么value=可以省略
+		
+	****注解的解析 -- 依赖反射进行解析
+		Class  getAnnotation(Anno3.class)
+		Method getAnnotation(Anno3.class)
+		Field getAnnotation(Anno3.class)
+		
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
