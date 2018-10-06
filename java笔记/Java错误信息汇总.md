@@ -1,3 +1,12 @@
+### A
+```java
+1.org.springframework.security.access.AccessDeniedException: Access is denied
+	解决方法：可能实在spring-security配置文件中，配置了<!-- 配置加密的方式
+            <security:password-encoder ref="passwordEncoder"/>-->，将其注释掉可以解决
+```
+
+
+
 ### I
 
 ```java
@@ -9,7 +18,7 @@
 
 
 
-## M
+### M
 
 ```java
 1.MySQLSyntaxErrorException: Table 'user' already exists
