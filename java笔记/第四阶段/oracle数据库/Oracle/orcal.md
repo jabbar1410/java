@@ -220,7 +220,7 @@ having avg(e.sal)>2000;
 **---所有条件都不能使用别名来判断。**
 **--比如下面的条件语句也不能使用别名当条件（执行sql语句时，先执行from后面的表,再执行where后面的判断，最后执行字段）**
 
-**顺序：from-->where-->having-->select-->order by**
+## 顺序：from-->where-->having-->select-->order by**
 
 select ename, sal s from emp where sal>1500;
 
