@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="origin">
+<title>Eclipse上Maven环境配置使用 (全) - 唐胜伟 - 博客园</title>
+<meta property="og:description" content="Eclipse上Maven环境配置使用 (全) 1. 安装配置Maven： 1.1 从Apache网站 http://maven.apache.org/ 下载并且解压缩安装Apache Maven。 ">
+<link type="text/css" rel="stylesheet" href="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/bundle-SimpleBlue.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/bundle-SimpleBlue-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/tangshengwei/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/tangshengwei/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/tangshengwei/wlwmanifest.xml">
+<script src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/osd.js"></script><script src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/amp4ads-host-v0.js"></script><script src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/pubads_impl_rendering_264.js"></script><script async="" src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/analytics.js"></script><script type="text/javascript" src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/encoder.js"></script><script src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/jquery-2.js"></script>
+<script type="text/javascript">var currentBlogApp = 'tangshengwei', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/blog-common.js" type="text/javascript"></script>
+<link rel="preload" href="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/integrator.js" as="script"><script type="text/javascript" src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/integrator.js"></script><script src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/pubads_impl_264.js" async=""></script></head>
+<body>
+<a name="top"></a>
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="https://www.cnblogs.com/tangshengwei/">唐胜伟</a></div>
+<div class="subtitle"></div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/tangshengwei/">首页</a></li>
+<li id="nav_newpost"><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/%E5%94%90%E8%83%9C%E4%BC%9F">联系</a></li>
+<li id="nav_rss"><a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/tangshengwei/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="https://www.cnblogs.com/tangshengwei/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<!--done-->
+随笔-244&nbsp;
+文章-7&nbsp;
+评论-22&nbsp;
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/tangshengwei/p/6341462.html">Eclipse上Maven环境配置使用 (全)</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><p><span style="background-color: #00ffff; font-size: 18pt"><strong>　　　　　　Eclipse上Maven环境配置使用 (全)　　　　　　</strong></span><br><strong><span style="background-color: #00ffff">1. 安装配置Maven：</span></strong><br>　<strong>　1.1 从Apache网站 <a href="http://maven.apache.org/" target="_blank">http://maven.apache.org/</a> 下载并且解压缩安装Apache Maven。</strong><br><strong>　　　　Maven下载地址: <a href="http://maven.apache.org/download.cgi" target="_blank">http://maven.apache.org/download.cgi</a></strong><br><strong>　　1.2 配置 Maven 的conf文件夹中配置文件settings.xml。　</strong></p>
+<div class="cnblogs_code"><img id="code_img_closed_f286aaf1-ac94-48f3-b5ed-51c7dcae1ce1" class="code_img_closed" src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/ContractedBlock.gif" alt=""><img id="code_img_opened_f286aaf1-ac94-48f3-b5ed-51c7dcae1ce1" class="code_img_opened" style="display: none" src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/ExpandedBlockStart.gif" alt="">
+<div id="cnblogs_code_open_f286aaf1-ac94-48f3-b5ed-51c7dcae1ce1" class="cnblogs_code_hide">
+<pre><span style="color: #0000ff">&lt;?</span><span style="color: #ff00ff">xml version="1.0" encoding="UTF-8"</span><span style="color: #0000ff">?&gt;</span>
+
+<span style="color: #0000ff">&lt;</span><span style="color: #800000">settings </span><span style="color: #ff0000">xmlns</span><span style="color: #0000ff">="http://maven.apache.org/SETTINGS/1.0.0"</span><span style="color: #ff0000">
+    xmlns:xsi</span><span style="color: #0000ff">="http://www.w3.org/2001/XMLSchema-instance"</span><span style="color: #ff0000">
+    xsi:schemaLocation</span><span style="color: #0000ff">="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"</span><span style="color: #0000ff">&gt;</span>
+    
+    <span style="color: #008000">&lt;!--</span><span style="color: #008000">
+    配置本地MAVEN仓库位置，默认在：C:\Users\机器名\.m2\repository
+    &lt;localRepository&gt;D:\Program Files\mvn\&lt;/localRepository&gt;  
+    ** Eclipse-&gt;Windows-&gt;Preferences-&gt;java-&gt;Build Path-&gt;Classpath Variables 
+    </span><span style="color: #008000">--&gt;</span>
+    
+    <span style="color: #0000ff">&lt;</span><span style="color: #800000">pluginGroups</span><span style="color: #0000ff">&gt;</span>
+    <span style="color: #0000ff">&lt;/</span><span style="color: #800000">pluginGroups</span><span style="color: #0000ff">&gt;</span>
+
+    <span style="color: #0000ff">&lt;</span><span style="color: #800000">proxies</span><span style="color: #0000ff">&gt;</span>
+    <span style="color: #0000ff">&lt;/</span><span style="color: #800000">proxies</span><span style="color: #0000ff">&gt;</span>
+
+    <span style="color: #0000ff">&lt;</span><span style="color: #800000">servers</span><span style="color: #0000ff">&gt;</span>
+    <span style="color: #0000ff">&lt;/</span><span style="color: #800000">servers</span><span style="color: #0000ff">&gt;</span>
+
+    <span style="color: #0000ff">&lt;</span><span style="color: #800000">mirrors</span><span style="color: #0000ff">&gt;</span>
+        <span style="color: #0000ff">&lt;</span><span style="color: #800000">mirror</span><span style="color: #0000ff">&gt;</span>
+            <span style="color: #0000ff">&lt;</span><span style="color: #800000">id</span><span style="color: #0000ff">&gt;</span>aliyun<span style="color: #0000ff">&lt;/</span><span style="color: #800000">id</span><span style="color: #0000ff">&gt;</span>
+            <span style="color: #0000ff">&lt;</span><span style="color: #800000">name</span><span style="color: #0000ff">&gt;</span>aliyun Maven<span style="color: #0000ff">&lt;/</span><span style="color: #800000">name</span><span style="color: #0000ff">&gt;</span>
+            <span style="color: #0000ff">&lt;</span><span style="color: #800000">mirrorOf</span><span style="color: #0000ff">&gt;</span>*<span style="color: #0000ff">&lt;/</span><span style="color: #800000">mirrorOf</span><span style="color: #0000ff">&gt;</span>
+            <span style="color: #0000ff">&lt;</span><span style="color: #800000">url</span><span style="color: #0000ff">&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span style="color: #0000ff">&lt;/</span><span style="color: #800000">url</span><span style="color: #0000ff">&gt;</span>
+        <span style="color: #0000ff">&lt;/</span><span style="color: #800000">mirror</span><span style="color: #0000ff">&gt;</span>
+    <span style="color: #0000ff">&lt;/</span><span style="color: #800000">mirrors</span><span style="color: #0000ff">&gt;</span>
+    
+    <span style="color: #0000ff">&lt;</span><span style="color: #800000">profiles</span><span style="color: #0000ff">&gt;</span>
+    <span style="color: #0000ff">&lt;/</span><span style="color: #800000">profiles</span><span style="color: #0000ff">&gt;</span>
+    
+    <span style="color: #0000ff">&lt;</span><span style="color: #800000">activeProfiles</span><span style="color: #0000ff">&gt;</span>
+    <span style="color: #0000ff">&lt;/</span><span style="color: #800000">activeProfiles</span><span style="color: #0000ff">&gt;</span>
+<span style="color: #0000ff">&lt;/</span><span style="color: #800000">settings</span><span style="color: #0000ff">&gt;</span></pre>
+</div>
+<span class="cnblogs_code_collapse">settings.xml</span></div>
+<p>　　<strong>1.3 修改settings.xml，添加镜像服务器设置：</strong><br>&nbsp;&nbsp;&nbsp; 　　使用阿里云提供的Maven镜像服务器。<br>&nbsp;&nbsp; &nbsp;　　阿里云镜像服务器URL: <a href="http://maven.aliyun.com/nexus/content/groups/public/" target="_blank">http://maven.aliyun.com/nexus/content/groups/public/</a><br><br><strong><span style="background-color: #00ffff">2. Eclipse中Maven的配置：</span></strong></p>
+<div class="cnblogs_Highlighter sh-gutter">
+<div><div id="highlighter_812185" class="syntaxhighlighter  csharp"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">说
+明：最新版的Eclipse已经内嵌了Mevne插件m2e, 不需要安装Maven插件, 
+如果不做任何配置,&lt;br&gt;会自动连接使用maven中央库自然可以使用,但是中央库在国外, 
+受到中国防火墙等因素影&lt;br&gt;响其访问速度很慢, 只有连接到国内镜像库才能提高Maven运行速度. 
+&lt;br&gt;连接到国内镜像库按照如下配置.</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;<strong> 2.1 打开Eclipse的首选项设置</strong><br>&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212514191-975198381.png" alt=""><br>&nbsp;&nbsp; &nbsp;<strong>2.2 找到Maven的配置项目</strong><br>&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212529238-770273664.png" alt=""><br>&nbsp;&nbsp; &nbsp;<strong>2.3 设置Maven的全局配置文件settings.xml</strong><br>&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212540144-1773906604.png" alt=""><br>&nbsp;&nbsp;&nbsp; 说明：Eclipse会自动的使用 settings.xml 文件中包含镜像库的URL地址信息, 找到Maven镜像库位置.<br>&nbsp;&nbsp; &nbsp;<strong>2.4 更新配置信息</strong><br>&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212553785-1572459575.png" alt=""><br>&nbsp;&nbsp; &nbsp;<strong>2.5 找到Window菜单</strong><br>&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212604113-390786644.png" alt=""><br>&nbsp;&nbsp; &nbsp;<strong>2.6 开启Maven的视图, 检查是否已经配置了镜像库</strong><br>&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212702363-1053867551.png" alt=""><br>&nbsp;&nbsp; &nbsp;<br><span style="font-size: 14pt; background-color: #00ffff">Maven 的使用，</span><span style="background-color: #00ffff"><span style="font-size: 14pt">创建Maven 桌面项目</span></span><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<strong>1.1 选择菜单创建Maven项目</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212749785-1933895243.png" alt=""><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<strong>1.2 选择项目目录结构的骨架</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212759316-1201643646.png" alt=""><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<strong>1.3 输入项目相关信息</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212809879-1697753370.png" alt=""><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<strong>1.4 Maven jar项目的目录结构</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212822723-946978278.png" alt=""><br>　　　　备注：因为这个步骤必须连接到Maven服务器获取相关信息, 如果配置和网络有故障则这个步骤就会出现错误!<br>　　　　　　　如果出现错误请使用浏览器检测是否能够访问Maven服务器的URL.<br>&nbsp;&nbsp; &nbsp;<strong><span style="background-color: #00ffff">2. 创建Maven Web项目</span></strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<strong>2.1 选择菜单创建Maven项目</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212859379-30782784.png" alt=""><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<strong>2.2 选择项目目录结构的骨架</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212911051-1168421125.png" alt=""><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<strong>2.3 输入项目相关信息</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212924207-31656646.png" alt=""><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<strong>2.4 Maven war项目的目录结构</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212939723-1375051602.png" alt=""><br>　　　　备注：因为这个步骤必须连接到Maven服务器获取相关信息, 如果配置和网络有故障则这个步骤就会出现错误!<br>　　　　　　　如果出现错误请使用浏览器检测是否能够访问Maven服务器的URL.<br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<strong>2.5 创建Web部署描述文件web.xml消除检测错误</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122212957801-1584681062.png" alt=""><br><span style="font-size: 14pt"><strong><span style="background-color: #00ffff">在Eclipse中搜索添加Jar组件"坐标"</span></strong></span><br>&nbsp;&nbsp; &nbsp;Eclipse与Maven配合提供了强大的jar组件集成功能. <br>&nbsp;&nbsp; &nbsp;<strong>1.1 更新Maven库的索引文件</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; <strong>说明：</strong>Mavne索引用于搜索jar组件"坐标", 更新索引以后就可以在Eclipse中搜索jar组件"坐标", 但这个功能不是必须的<br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122213029410-1649813429.png" alt=""><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <strong><span style="background-color: #00ffff">注意：</span></strong>如果更换过Eclipse工作空间, 就需要再次更新Maven索引;<br>&nbsp;&nbsp; &nbsp;<strong>1.2 打开Maven项目中的pom.xml文件</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122213047785-2025887933.png" alt=""><br>&nbsp;&nbsp; &nbsp;<strong>1.3 搜索需要jar组件包"坐标"</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122213059801-1381238351.png" alt=""><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <strong><span style="background-color: #00ffff">说明：</span></strong>这个搜索功能是利用 1.1步骤更新Maven库的索引文件 的索引完成, 如果没有更新过索引, 这个功能失效!! <br>&nbsp;&nbsp; <strong>&nbsp;1.4 搜索结果就是在pom.xml文件中"坐标", 保存pom.xml时候会自动下载jar组件</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122213113957-1934788641.png" alt=""><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 备注：这个搜索功能是利用 Maven 仓库服务器完成的, 如果不能连接到Maven仓库服务器, 这是会发生错误!! <br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<span style="background-color: #ff0000">注意：由于版权的问题, 无法在公共Maven服务器上下载Oracle JDBC Driver</span><br>&nbsp;&nbsp; &nbsp;<strong>1.5 使用Maven下载的jar组件. 组件保存在本地仓库".m2"文件夹中</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122213128519-403514557.png" alt=""><br>&nbsp;&nbsp; &nbsp;<strong>1.6 如果出现下载故障, 可以在检查Maven仓库正常联通后, 再删除本地仓库".m2"以后"更新Maven 项目"</strong><br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122213203894-267231288.png" alt=""><br><span style="font-size: 14pt"><strong><span style="background-color: #00ffff">在线搜索添加Jar组件"坐标"</span></strong></span><br>&nbsp;&nbsp; &nbsp;阿里云jar组件"坐标"搜索: <a href="http://maven.aliyun.com/nexus/" target="_blank">http://maven.aliyun.com/nexus/</a><br>&nbsp;&nbsp; &nbsp;<strong>1.1 阿里云jar组件"坐标"搜索</strong><br>&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122213505769-425479961.png" alt=""><br>&nbsp;&nbsp; &nbsp;<strong>1.2 搜索结果很多, 选择需要的组件版本, 找到组件"坐标"</strong><br>&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122213523457-1799675195.png" alt=""><br>&nbsp;&nbsp; &nbsp;<strong>1.3 将找到组件"坐标" 复制到pom.xml文件中, 保存pom.xml文件时候自动下载jar组件.</strong><br>&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122213608926-1617598535.png" alt=""><br>&nbsp;<strong>&nbsp; &nbsp;1.4 下载jar组件自动保存在本地库 ".m2" 文件夹.</strong><br>&nbsp;&nbsp;&nbsp; <img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/779593-20170122213634676-545684539.png" alt=""></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="https://www.cnblogs.com/tangshengwei/category/908252.html" target="_blank">JAVA 相关,安装,配置</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(6341462,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow('625412f2-881e-e511-b908-9dcfd8948a71');" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/tangshengwei/" target="_blank"><img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/20150630020803.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/tangshengwei/">唐胜伟</a><br>
+            <a href="http://home.cnblogs.com/u/tangshengwei/followees">关注 - 10</a><br>
+            <a href="http://home.cnblogs.com/u/tangshengwei/followers">粉丝 - 41</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow('625412f2-881e-e511-b908-9dcfd8948a71');return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(6341462,'Digg')">
+        <span class="diggnum" id="digg_count">24</span>
+    </div>
+    <div class="buryit" onclick="votePost(6341462,'Bury')">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="https://www.cnblogs.com/tangshengwei/p/6336586.html" class="p_n_p_prefix">« </a> 上一篇：<a href="https://www.cnblogs.com/tangshengwei/p/6336586.html" title="发布于2017-01-21 10:36">Unit01： JDBC原理 、 JDBC基础编程</a><br><a href="https://www.cnblogs.com/tangshengwei/p/6341628.html" class="p_n_p_prefix">» </a> 下一篇：<a href="https://www.cnblogs.com/tangshengwei/p/6341628.html" title="发布于2017-01-22 23:09">将下载到本地的JAR包手动添加到Maven仓库</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2017-01-22 21:37</span> <a href="https://www.cnblogs.com/tangshengwei/">唐胜伟</a> 阅读(<span id="post_view_count">107984</span>) 评论(<span id="post_comment_count">14</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=6341462" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(6341462);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=233454,cb_entryId=6341462,cb_blogApp=currentBlogApp,cb_blogUserGuid='625412f2-881e-e511-b908-9dcfd8948a71',cb_entryCreatedDate='2017/1/22 21:37:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<!--done-->
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3694107" class="layer">#1楼</a><a name="3694107" id="comment_anchor_3694107"></a>  <span class="comment_date">2017-05-17 10:14</span> <a id="a_comment_author_3694107" href="http://home.cnblogs.com/u/1077541/" target="_blank">你的笑忘书</a> <a href="http://msg.cnblogs.com/send/%E4%BD%A0%E7%9A%84%E7%AC%91%E5%BF%98%E4%B9%A6" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3694107" class="blog_comment_body">图文并茂，细节讲解很详细。不错。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3694107,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3694107,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3718758" class="layer">#2楼</a><a name="3718758" id="comment_anchor_3718758"></a>  <span class="comment_date">2017-06-20 17:00</span> <a id="a_comment_author_3718758" href="https://www.cnblogs.com/lc-511/" target="_blank">我不是超人</a> <a href="http://msg.cnblogs.com/send/%E6%88%91%E4%B8%8D%E6%98%AF%E8%B6%85%E4%BA%BA" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3718758" class="blog_comment_body">非常好，简单易懂，适合入门</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3718758,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3718758,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3718872" class="layer">#3楼</a><a name="3718872" id="comment_anchor_3718872"></a>  <span class="comment_date">2017-06-20 18:38</span> <a id="a_comment_author_3718872" href="http://home.cnblogs.com/u/327921/" target="_blank">xcore</a> <a href="http://msg.cnblogs.com/send/xcore" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3718872" class="blog_comment_body">非常详细，配图也到位。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3718872,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3718872,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3835672" class="layer">#4楼</a><a name="3835672" id="comment_anchor_3835672"></a>  <span class="comment_date">2017-11-09 10:55</span> <a id="a_comment_author_3835672" href="http://home.cnblogs.com/u/1194239/" target="_blank">jungle1992</a> <a href="http://msg.cnblogs.com/send/jungle1992" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3835672" class="blog_comment_body">最详细，最实用</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3835672,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3835672,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3849612" class="layer">#5楼</a><a name="3849612" id="comment_anchor_3849612"></a>  <span class="comment_date">2017-11-24 17:35</span> <a id="a_comment_author_3849612" href="http://home.cnblogs.com/u/1286696/" target="_blank">zhangmile</a> <a href="http://msg.cnblogs.com/send/zhangmile" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3849612" class="blog_comment_body">请教下博主，在更新Maven库的索引文件的时候，报出错误：<br>nexus-maven-repository-index.zip (系统找不到指定的文件。)<br>找不到这个.zip文件，在文件夹下只有一个nexus-maven-repository-index.gz文件</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3849612,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3849612,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3872265" class="layer">#6楼</a><a name="3872265" id="comment_anchor_3872265"></a>  <span class="comment_date">2017-12-23 15:41</span> <a id="a_comment_author_3872265" href="http://home.cnblogs.com/u/1253456/" target="_blank">唐阿鹏</a> <a href="http://msg.cnblogs.com/send/%E5%94%90%E9%98%BF%E9%B9%8F" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3872265" class="blog_comment_body">请问为什么我的项目下没有 maven dependencies，而且web项目与非web项目的目录结构一样</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3872265,'Digg',this)">支持(1)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3872265,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3914166" class="layer">#7楼</a><a name="3914166" id="comment_anchor_3914166"></a>  <span class="comment_date">2018-03-02 20:49</span> <a id="a_comment_author_3914166" href="https://www.cnblogs.com/northern-light/" target="_blank">北极丶光</a> <a href="http://msg.cnblogs.com/send/%E5%8C%97%E6%9E%81%E4%B8%B6%E5%85%89" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3914166" class="blog_comment_body">看了博主写的瞬间感觉到高大上</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3914166,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3914166,'Bury',this)">反对(0)</a></div><span id="comment_3914166_avatar" style="display:none;">http://pic.cnblogs.com/face/1283691/20171125164704.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3914239" class="layer">#8楼</a><a name="3914239" id="comment_anchor_3914239"></a>  <span class="comment_date">2018-03-03 09:06</span> <a id="a_comment_author_3914239" href="http://home.cnblogs.com/u/1035922/" target="_blank">乘风破浪.zz</a> <a href="http://msg.cnblogs.com/send/%E4%B9%98%E9%A3%8E%E7%A0%B4%E6%B5%AA.zz" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3914239" class="blog_comment_body">感谢大牛分享。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3914239,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3914239,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3938163" class="layer">#9楼</a><a name="3938163" id="comment_anchor_3938163"></a>  <span class="comment_date">2018-03-30 20:56</span> <a id="a_comment_author_3938163" href="http://home.cnblogs.com/u/987121/" target="_blank">crole</a> <a href="http://msg.cnblogs.com/send/crole" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3938163" class="blog_comment_body">通俗易懂，非常感谢</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3938163,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3938163,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#3960563" class="layer">#10楼</a><a name="3960563" id="comment_anchor_3960563"></a>  <span class="comment_date">2018-04-25 10:12</span> <a id="a_comment_author_3960563" href="http://home.cnblogs.com/u/1384742/" target="_blank">OXYLXH</a> <a href="http://msg.cnblogs.com/send/OXYLXH" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3960563" class="blog_comment_body">大牛厉害</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3960563,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3960563,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#4020906" class="layer">#11楼</a><a name="4020906" id="comment_anchor_4020906"></a>  <span class="comment_date">2018-07-15 23:11</span> <a id="a_comment_author_4020906" href="https://www.cnblogs.com/windows7system/" target="_blank">nan_python</a> <a href="http://msg.cnblogs.com/send/nan_python" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4020906" class="blog_comment_body">我的配置到好了 但是global dependencies 只有一个central并没有阿里镜像</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4020906,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4020906,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#4022349" class="layer">#12楼</a><a name="4022349" id="comment_anchor_4022349"></a>  <span class="comment_date">2018-07-17 17:15</span> <a id="a_comment_author_4022349" href="http://home.cnblogs.com/u/1429301/" target="_blank">CHENYUE521</a> <a href="http://msg.cnblogs.com/send/CHENYUE521" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4022349" class="blog_comment_body">这是某培训机构的全部教程</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4022349,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4022349,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#4044046" class="layer">#13楼</a><a name="4044046" id="comment_anchor_4044046"></a>  <span class="comment_date">2018-08-16 10:09</span> <a id="a_comment_author_4044046" href="https://www.cnblogs.com/xidongyu/" target="_blank">被罚站的树</a> <a href="http://msg.cnblogs.com/send/%E8%A2%AB%E7%BD%9A%E7%AB%99%E7%9A%84%E6%A0%91" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4044046" class="blog_comment_body">mark</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4044046,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4044046,'Bury',this)">反对(0)</a></div><span id="comment_4044046_avatar" style="display:none;">http://pic.cnblogs.com/face/872539/20160305194755.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#4083531" class="layer">#14楼</a><a name="4083531" id="comment_anchor_4083531"></a><span id="comment-maxId" style="display:none;">4083531</span><span id="comment-maxDate" style="display:none;">2018/10/8 10:48:43</span>  <span class="comment_date">2018-10-08 10:48</span> <a id="a_comment_author_4083531" href="http://home.cnblogs.com/u/795623/" target="_blank">RikuH</a> <a href="http://msg.cnblogs.com/send/RikuH" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4083531" class="blog_comment_body">非常感谢，帮了我一个大忙。<br>我之前虽然修改了maven的仓库地址，添加了国内的镜像。但是没有在Eclipse里面设置全局配置文件。所以Eclipse还是会傻乎乎去试图爬墙。看了你的文章终于明白问题在哪里了。步骤也非常详细，节约了我很多时间。<br>再次表达谢意！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4083531,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4083531,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login('commentform');">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】超50万VC++源码: 大型组态工控、电力仿真CAD与GIS源码库！</a><br><a href="http://clickc.admaster.com.cn/c/a116493,b2949399,c1705,i0,m101,8a1,8b3,h" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-华为云')">【推荐】华为云全联接大会 高性能云服务器限时2折</a><br><a href="https://cloud.tencent.com/act/domainsales?fromSource=gwzcw.1351351.1351351.1351351" target="_blank" onclick="ga('send', 'event', 'Link', 'click', 'T2-域名')">【推荐】腾讯云新注册用户域名抢购1元起</a><br></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"><a href="https://cloud.tencent.com/act/special/amd?fromSource=gwzcw.1351353.1351353.1351353" target="_blank"><img src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/24442-20181008121639348-1607410764.jpg" alt="腾讯云1008" onclick="ga('send', 'event', 'Link', 'click', 'C1');" width="300" height="250"></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="https://news.cnblogs.com/n/609458/" target="_blank">马云拟在印尼设立“马云企业家研究所” 欲培养数千名科技企业家</a><br> ·  <a href="https://news.cnblogs.com/n/609457/" target="_blank">流媒体巨头Netflix下周公布财报 用户增长备受瞩目</a><br> ·  <a href="https://news.cnblogs.com/n/609456/" target="_blank">雷军：谁不说咱家乡好</a><br> ·  <a href="https://news.cnblogs.com/n/609455/" target="_blank">美国国会报告：NASA每项太空任务都要搜索外星生命！</a><br> ·  <a href="https://news.cnblogs.com/n/609454/" target="_blank">亚马逊申请新专利 可读取用户情绪发定向广告</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<script async="async" src="Eclipse%E4%B8%8AMaven%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%BD%BF%E7%94%A8_files/gpt.js"></script>
+<script>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+</script>
+
+<script>
+  googletag.cmd.push(function() {
+    googletag.defineSlot('/1090369/C2', [468, 60], 'div-gpt-ad-1539008685004-0').addService(googletag.pubads());
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+  });
+</script>
+<div id="cnblogs_c2" class="c_ad_block">
+    <div id="div-gpt-ad-1539008685004-0" style="height:60px; width:468px;" data-google-query-id="CJGj39zfg94CFYY6lgodHfIKTA">
+    <script>
+    if (new Date() >= new Date(2018, 9, 13)) {
+        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1539008685004-0'); });
+    }
+    </script>
+    <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C2_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C2_0" scrolling="no" marginwidth="0" marginheight="0" style="border: 0px none; vertical-align: bottom;" srcdoc="" data-load-complete="true" width="468" height="60" frameborder="0"></iframe></div></div>
+</div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="https://kb.cnblogs.com/page/606682/" target="_blank">为什么说 Java 程序员必须掌握 Spring Boot ？</a><br> ·  <a href="https://kb.cnblogs.com/page/606645/" target="_blank">在学习中，有一个比掌握知识更重要的能力</a><br> ·  <a href="https://kb.cnblogs.com/page/603663/" target="_blank">如何招到一个靠谱的程序员</a><br> ·  <a href="https://kb.cnblogs.com/page/573614/" target="_blank">一个故事看懂“区块链”</a><br> ·  <a href="https://kb.cnblogs.com/page/603697/" target="_blank">被踢出去的用户</a><br></div>» <a href="https://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/tangshengwei/">唐胜伟</a><br>园龄：<a href="https://home.cnblogs.com/u/tangshengwei/" title="入园时间：2015-06-30">3年3个月</a><br>粉丝：<a href="https://home.cnblogs.com/u/tangshengwei/followers/">41</a><br>关注：<a href="https://home.cnblogs.com/u/tangshengwei/followees/">10</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow('625412f2-881e-e511-b908-9dcfd8948a71')">+加关注</a></div><script>getFollowStatus('625412f2-881e-e511-b908-9dcfd8948a71')</script></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" title="Calendar" cellspacing="0" cellpadding="0">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar('2018/09/01');return false;">&lt;</a></td><td align="center">2018年10月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar('2018/11/01');return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" abbr="日" scope="col" align="center">日</th><th class="CalDayHeader" abbr="一" scope="col" align="center">一</th><th class="CalDayHeader" abbr="二" scope="col" align="center">二</th><th class="CalDayHeader" abbr="三" scope="col" align="center">三</th><th class="CalDayHeader" abbr="四" scope="col" align="center">四</th><th class="CalDayHeader" abbr="五" scope="col" align="center">五</th><th class="CalDayHeader" abbr="六" scope="col" align="center">六</th></tr><tr><td class="CalOtherMonthDay" align="center">30</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">4</td><td align="center">5</td><td class="CalWeekendDay" align="center">6</td></tr><tr><td class="CalWeekendDay" align="center">7</td><td align="center">8</td><td align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td><td class="CalTodayDay" align="center">13</td></tr><tr><td class="CalWeekendDay" align="center">14</td><td align="center">15</td><td align="center">16</td><td align="center">17</td><td align="center">18</td><td align="center">19</td><td class="CalWeekendDay" align="center">20</td></tr><tr><td class="CalWeekendDay" align="center">21</td><td align="center">22</td><td align="center">23</td><td align="center">24</td><td align="center">25</td><td align="center">26</td><td class="CalWeekendDay" align="center">27</td></tr><tr><td class="CalWeekendDay" align="center">28</td><td align="center">29</td><td align="center">30</td><td align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td></tr><tr><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td><td class="CalOtherMonthDay" align="center">9</td><td class="CalOtherMonthDay" align="center">10</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk" type="text">&nbsp;<input onclick="zzk_go()" value="找找看" id="btnZzk" class="btn_my_zzk" type="button"></div>
+<div id="widget_my_google" class="div_my_zzk"><input name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk" type="text">&nbsp;<input onclick="google_go()" value="谷歌搜索" class="btn_my_zzk" type="button"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="https://www.cnblogs.com/tangshengwei/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="https://www.cnblogs.com/tangshengwei/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="https://www.cnblogs.com/tangshengwei/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="https://www.cnblogs.com/tangshengwei/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="https://www.cnblogs.com/tangshengwei/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block"></div><div id="sidebar_categories">
+<div class="catListPostCategory">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="https://www.cnblogs.com/tangshengwei/category/963214.html">AJAX(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="https://www.cnblogs.com/tangshengwei/category/711508.html">Ansible 及 SaltStack (4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="https://www.cnblogs.com/tangshengwei/category/711507.html">awk和sed和grep(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="https://www.cnblogs.com/tangshengwei/category/833793.html">Docker(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="https://www.cnblogs.com/tangshengwei/category/737430.html">ERROR解决方法(10)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="https://www.cnblogs.com/tangshengwei/category/711509.html">iptables防火墙(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="https://www.cnblogs.com/tangshengwei/category/908252.html">JAVA 相关,安装,配置(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="https://www.cnblogs.com/tangshengwei/category/908253.html">JAVA笔记(38)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="https://www.cnblogs.com/tangshengwei/category/908254.html">JAVA小程序(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="https://www.cnblogs.com/tangshengwei/category/716481.html">Linux(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="https://www.cnblogs.com/tangshengwei/category/757188.html">Linux服务的配置文件(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="https://www.cnblogs.com/tangshengwei/category/807429.html">Linux服务介绍(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_12" href="https://www.cnblogs.com/tangshengwei/category/711438.html">Linux集群服务搭建(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_13" href="https://www.cnblogs.com/tangshengwei/category/711436.html">Linux命令(17)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_14" href="https://www.cnblogs.com/tangshengwei/category/840476.html">Monitor(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_15" href="https://www.cnblogs.com/tangshengwei/category/711439.html">mysql相关(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_16" href="https://www.cnblogs.com/tangshengwei/category/757117.html">nginx相关(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_17" href="https://www.cnblogs.com/tangshengwei/category/1024509.html">Oracle(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_18" href="https://www.cnblogs.com/tangshengwei/category/888898.html">Python安装(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_19" href="https://www.cnblogs.com/tangshengwei/category/711505.html">Python笔记(12)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_20" href="https://www.cnblogs.com/tangshengwei/category/845611.html">Python小程序(5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_21" href="https://www.cnblogs.com/tangshengwei/category/950153.html">ServletJPS(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_22" href="https://www.cnblogs.com/tangshengwei/category/711506.html">Shell(20)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_23" href="https://www.cnblogs.com/tangshengwei/category/780897.html">shell 脚本示例(27)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_24" href="https://www.cnblogs.com/tangshengwei/category/826576.html">Shell计算，算法(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_25" href="https://www.cnblogs.com/tangshengwei/category/820543.html">Shell数组，函数(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_26" href="https://www.cnblogs.com/tangshengwei/category/956419.html">Spring+Mybatis_V1 &amp; V2(19)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_27" href="https://www.cnblogs.com/tangshengwei/category/716460.html">web 相关(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_28" href="https://www.cnblogs.com/tangshengwei/category/868077.html">Windows(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_29" href="https://www.cnblogs.com/tangshengwei/category/807264.html">好的技术博客地址(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_30" href="https://www.cnblogs.com/tangshengwei/category/716502.html">技术总结(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_31" href="https://www.cnblogs.com/tangshengwei/category/943153.html">前端,html,css,js(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_32" href="https://www.cnblogs.com/tangshengwei/category/829643.html">生活(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_33" href="https://www.cnblogs.com/tangshengwei/category/716469.html">网络相关知识(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_34" href="https://www.cnblogs.com/tangshengwei/category/711513.html">正能量的文章-句子(4)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListPostArchive">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="https://www.cnblogs.com/tangshengwei/archive/2017/07.html">2017年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="https://www.cnblogs.com/tangshengwei/archive/2017/06.html">2017年6月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="https://www.cnblogs.com/tangshengwei/archive/2017/05.html">2017年5月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="https://www.cnblogs.com/tangshengwei/archive/2017/04.html">2017年4月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="https://www.cnblogs.com/tangshengwei/archive/2017/03.html">2017年3月 (20)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="https://www.cnblogs.com/tangshengwei/archive/2017/02.html">2017年2月 (19)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="https://www.cnblogs.com/tangshengwei/archive/2017/01.html">2017年1月 (20)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="https://www.cnblogs.com/tangshengwei/archive/2016/12.html">2016年12月 (22)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="https://www.cnblogs.com/tangshengwei/archive/2016/11.html">2016年11月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="https://www.cnblogs.com/tangshengwei/archive/2016/10.html">2016年10月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="https://www.cnblogs.com/tangshengwei/archive/2016/09.html">2016年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="https://www.cnblogs.com/tangshengwei/archive/2016/08.html">2016年8月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="https://www.cnblogs.com/tangshengwei/archive/2016/07.html">2016年7月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="https://www.cnblogs.com/tangshengwei/archive/2016/06.html">2016年6月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="https://www.cnblogs.com/tangshengwei/archive/2016/05.html">2016年5月 (21)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="https://www.cnblogs.com/tangshengwei/archive/2016/04.html">2016年4月 (32)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_16" href="https://www.cnblogs.com/tangshengwei/archive/2016/03.html">2016年3月 (18)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_17" href="https://www.cnblogs.com/tangshengwei/archive/2016/02.html">2016年2月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_18" href="https://www.cnblogs.com/tangshengwei/archive/2016/01.html">2016年1月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_19" href="https://www.cnblogs.com/tangshengwei/archive/2015/12.html">2015年12月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_20" href="https://www.cnblogs.com/tangshengwei/archive/2015/11.html">2015年11月 (16)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_21" href="https://www.cnblogs.com/tangshengwei/archive/2015/10.html">2015年10月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_22" href="https://www.cnblogs.com/tangshengwei/archive/2015/09.html">2015年9月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_23" href="https://www.cnblogs.com/tangshengwei/archive/2015/08.html">2015年8月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_24" href="https://www.cnblogs.com/tangshengwei/archive/2015/07.html">2015年7月 (14)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListArticleCategory">
+<h3 class="catListTitle">文章分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_2_Link_0" href="https://www.cnblogs.com/tangshengwei/category/1127730.html">公司(2)</a> </li>
+
+<li><a id="CatList_LinkList_2_Link_1" href="https://www.cnblogs.com/tangshengwei/category/978132.html">面试(5)</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/tangshengwei/p/6341462.html#4083531">1. Re:Eclipse上Maven环境配置使用 (全)</a></li>
+        <li class="recent_comment_body">非常感谢，帮了我一个大忙。我之前虽然修改了maven的仓库地址，添加了国内的镜像。但是没有在Eclipse里面设置全局配置文件。所以Eclipse还是会傻乎乎去试图爬墙。看了你的文章终于明白问题在哪里......</li>
+        <li class="recent_comment_author">--RikuH</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/tangshengwei/p/6341462.html#4044046">2. Re:Eclipse上Maven环境配置使用 (全)</a></li>
+        <li class="recent_comment_body">mark</li>
+        <li class="recent_comment_author">--被罚站的树</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/tangshengwei/p/6341462.html#4022349">3. Re:Eclipse上Maven环境配置使用 (全)</a></li>
+        <li class="recent_comment_body">这是某培训机构的全部教程</li>
+        <li class="recent_comment_author">--CHENYUE521</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/tangshengwei/p/6341462.html#4020906">4. Re:Eclipse上Maven环境配置使用 (全)</a></li>
+        <li class="recent_comment_body">我的配置到好了 但是global dependencies 只有一个central并没有阿里镜像</li>
+        <li class="recent_comment_author">--nan_python</li>
+        <li class="recent_comment_title"><a href="https://www.cnblogs.com/tangshengwei/p/6341462.html#3960563">5. Re:Eclipse上Maven环境配置使用 (全)</a></li>
+        <li class="recent_comment_body">大牛厉害</li>
+        <li class="recent_comment_author">--OXYLXH</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="https://www.cnblogs.com/tangshengwei/p/6341462.html">1. Eclipse上Maven环境配置使用 (全)(107982)</a></li><li><a href="https://www.cnblogs.com/tangshengwei/p/6341628.html">2. 将下载到本地的JAR包手动添加到Maven仓库(39507)</a></li><li><a href="https://www.cnblogs.com/tangshengwei/p/6027200.html">3. Python处理时间 time  &amp;&amp;  datetime 模块(4424)</a></li><li><a href="https://www.cnblogs.com/tangshengwei/p/5257833.html">4. mysql各种集群的优缺点(2183)</a></li><li><a href="https://www.cnblogs.com/tangshengwei/p/6341665.html">5. 配置Jar包及相关依赖Jar包的本地存放路径(2129)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="https://www.cnblogs.com/tangshengwei/p/6341462.html">1. Eclipse上Maven环境配置使用 (全)(14)</a></li><li><a href="https://www.cnblogs.com/tangshengwei/p/5723714.html">2. Python-S13作业-day5-之 ATM(3)</a></li><li><a href="https://www.cnblogs.com/tangshengwei/p/6348037.html">3. Unit02： JDBC核心API(2)</a></li><li><a href="https://www.cnblogs.com/tangshengwei/p/6341628.html">4. 将下载到本地的JAR包手动添加到Maven仓库(2)</a></li><li><a href="https://www.cnblogs.com/tangshengwei/p/6659459.html">5. 反射(1)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="https://www.cnblogs.com/tangshengwei/p/6341462.html">1. Eclipse上Maven环境配置使用 (全)(24)</a></li><li><a href="https://www.cnblogs.com/tangshengwei/p/6341628.html">2. 将下载到本地的JAR包手动添加到Maven仓库(3)</a></li><li><a href="https://www.cnblogs.com/tangshengwei/p/6659459.html">3. 反射(1)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2018 唐胜伟
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+<iframe id="google_osd_static_frame_2966973113894" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body></html>
