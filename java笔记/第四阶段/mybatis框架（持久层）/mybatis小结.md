@@ -65,7 +65,7 @@
 ## 简单增删改查的基本配置
 ### 1.增加用户（selectKey用法）
 **方式1**：
-- 增加用户时，可以通过select last_insert_id()查询出当前添加用户的id值，并通过 `<selectKey>` 标签将id信息封装会user对象
+- 增加用户时，可以通过select last_insert_id()查询出当前添加用户的id值，并通过 `<selectKey>` 标签将id信息封装回user对象
 - 参数含义：
   - keyProperty:   实体类id名
   - keyColumn:    数据库字段名
@@ -182,7 +182,6 @@ resultMap
 					属性：
 						- select：属性指定的内容：查询用户的唯一标识（查询账户时，需要关联查询用户的sql所在的statementId）
 						- column：属性指定的内容：用户id查询时，所需要的参数的值 select属性所需要的参数
-
 
 
 
