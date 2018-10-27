@@ -55,6 +55,20 @@ AngularJs基础操作
     		<!--下拉列表value值  文本内容      元素       元素集合 -->
 ```
 
+###  ng-true-value 和 ng-false-value
+
+```html
+<input type="checkbox" ng-model="i.status" ng-true-value="1" ng-false-value="0">
+		<!--当多选框被选中时，给绑定值赋1，否则赋0-->
+```
+
+### ng-checked
+
+```html
+		<!--如果为ture，被选中，如果为false，则不选中 -->
+<input type="checkbox" ng-checked=true >多选框</input>
+```
+
 
 
 ## 2.基础操作
@@ -297,6 +311,21 @@ $scope.$watch('entity.goods.category1Id', function(newValue, oldValue) {
 
 ```
 
+### 获取地址栏中的参数值
+
+```javascript
+//1.前端控制器注入$location对象
+app.controller('goodsController', function ($scope, $controller,$location){}
+
+//2.接受方
+$scope.getProperty = function (){
+	//获取地址栏中，参数名为id的参数值
+	var id = $location.search()["id"];
+}
+//3.发送方  (angular对地址栏传参要求，需要在？前加上#)
+<a href="../goods/xxx.do#?id=111"   >跳转</a>
+```
+
 
 
 ## 3.补充
@@ -312,6 +341,8 @@ $scope.$watch('entity.goods.category1Id', function(newValue, oldValue) {
 #### 4.字符串转换为int：parseInt（数据）
 
 #### 5.字符串转换为json对象：JSON.parse(数据)
+
+#### 6.json装换为字符串：JSON.stringify(json串)
 
 
 
