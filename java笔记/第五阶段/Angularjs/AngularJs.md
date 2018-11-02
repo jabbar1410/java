@@ -36,6 +36,13 @@ AngularJs基础操作
   <tr ng-repeat="x in list">
       <td>{{x.属性名}}</td>
   </tr>
+
+<!--遍历map集合-->
+<li class="tag" ng-repeat="(key,value) in searchMap.spec">
+    {{key}}:{{value}}<i class="sui-icon icon-tb-close"></i>
+</li>
+
+
   ```
 
 ### ng-if:  用于判断表达式
@@ -69,7 +76,9 @@ AngularJs基础操作
 <input type="checkbox" ng-checked=true >多选框</input>
 ```
 
+### ng-bind-html ：显示html的内容
 
+### ng-src ：显示图片
 
 ## 2.基础操作
 
@@ -326,6 +335,20 @@ $scope.getProperty = function (){
 <a href="../goods/xxx.do#?id=111"   >跳转</a>
 ```
 
+### 使用$sce服务的trustAshtml方法实现转换
+
+```javascript
+//定义过滤器
+app.filter("trustHtml",['$sce',function ($sce) {
+    return function (data) {
+        return $sce.trustAsHtml(data);  //返回过滤后的内容，（信任html的转换）
+    }
+}]);
+
+//使用过滤器
+<div class="attr" ng-bind-html="item.title | trustHtml">
+```
+
 
 
 ## 3.补充
@@ -343,6 +366,14 @@ $scope.getProperty = function (){
 #### 5.字符串转换为json对象：JSON.parse(数据)
 
 #### 6.json装换为字符串：JSON.stringify(json串)
+
+#### 7.使用三元比较符： {{entity.value==0?'ative':''}}
+
+#### 8.删除json对象中元素
+
+#### 	$scope.searchMap={'keywords':'','category':'','brand':'','spec':{}};//搜索对象 
+
+#### 	delete  delete $scope.searchMap.spec[key];
 
 
 

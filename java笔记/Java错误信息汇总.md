@@ -5,6 +5,13 @@
             <security:password-encoder ref="passwordEncoder"/>-->，将其注释掉可以解决
 ```
 
+### R
+
+```java
+java.lang.RuntimeException: org.springframework.data.solr.UncategorizedSolrException: missing content stream; nested exception is org.apache.solr.client.solrj.impl.HttpSolrServer$RemoteSolrException: missing content stream
+	原因：我在项目中出现此问题，就是因为没有将对象加入List中。如果你也提示这个异常，请仔细检查代码，是不是提交数据到solr时，忘记加入包装了。
+```
+
 
 
 ### I
@@ -15,8 +22,6 @@
 2.java.lang.IllegalArgumentException: wrong number of arguments
 	解决方法：反射中调用getConstructor（Class）创建有参构造时需要传递参数类型的字节码对象
 ```
-
-
 
 ### M
 
